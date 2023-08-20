@@ -1,16 +1,20 @@
 import 'package:get/get.dart';
+import 'package:notepad/routes/routes_name.dart';
+
+import '../view/Start_Screen/Start_Screen.dart';
+import '../view/splash_screen/splash_screen.dart';
 
 
 class AppRoutes {
   static appRoutes() => [
-        // GetPage(
-        //   name: RoutesName.WelcomeScreen,
-        //   page: () => WelcomeScreen(),
-        // ),
-        // GetPage(
-        //   name: RoutesName.LoginPage,
-        //   page: () => LoginPage(),
-        // ),
+        GetPage(
+          name: RoutesName.splash_screen,
+          page: () => splash_screen(),
+        ),
+        GetPage(
+          name: RoutesName.Start_Screen,
+          page: () => Start_Screen(),
+        ),
         // GetPage(
         //   name: RoutesName.SignUpPage,
         //   page: () => SignUpPage(),

@@ -1,6 +1,6 @@
 class RoutesName {
-  static String WelcomeScreen = '/';
-  static String LoginPage = '/LoginPage';
+  static String splash_screen = '/';
+  static String Start_Screen = '/Start_Screen';
   static String SignUpPage = "/SignUpPage";
   static String BottomNav = "/BottomNav";
   static String CreateBlog = "/CreateBlog";
