@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/view/Start_Screen/Start_Screen.dart';
+import 'package:notepad/view/login/login.dart';
 
 import 'Routes/approutes.dart';
 import 'firebase_options.dart';
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          // getPages: AppRoutes.appRoutes(),
-          home: Start_Screen(),
+          getPages: AppRoutes.appRoutes(),
+          // home: Login(),
         );
       },
     );

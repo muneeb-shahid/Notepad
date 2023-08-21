@@ -5,15 +5,14 @@ import 'package:notepad/view/signUp/signUp.dart';
 import '../customButtons/login_signup_button.dart';
 import '../view/Start_Screen/Start_Screen.dart';
 import '../view/login/login.dart';
-import '../view/splash_screen/splash_screen.dart';
 
 
 class AppRoutes {
   static appRoutes() => [
-        GetPage(
-          name: RoutesName.splash_screen,
-          page: () => splash_screen(),
-        ),
+        // GetPage(
+        //   name: RoutesName.splash_screen,
+        //   page: () => splash_screen(),
+        // ),
         GetPage(
           name: RoutesName.Start_Screen,
           page: () => Start_Screen(),
