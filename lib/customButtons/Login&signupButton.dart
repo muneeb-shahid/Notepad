@@ -21,10 +21,11 @@ customLogin_SignupButton(
     onTap: func,
     
     child: Container(
-      height: screenHeight * 0.06,
-      width: screenWidth * 0.6,
+      
+      height: screenHeight * 0.07,
+      width: screenWidth * 0.8,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(5),
         color: innerColor,
       ),
       child: Center(

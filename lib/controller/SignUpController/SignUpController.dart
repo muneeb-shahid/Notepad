@@ -36,7 +36,7 @@ class SignUpController extends GetxController {
     return null;
   }
 
-  register(context) async {
+  register() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       try {
@@ -45,26 +45,7 @@ class SignUpController extends GetxController {
           email: emailAddress.text,
           password: password.text,
         );
-        // sendEmailVerificationCode();
         Get.to(EmailVerification());
-        //  User user = credential.user!;
-        // User? user = _auth.currentUser;
-        // if (user != null && !user.emailVerified) {
-        //   await user.sendEmailVerification();
-        //   Get.snackbar(
-        //     'Email Verification', //Snackbar title
-        //     'Verification email sent to ${user.email}', // Snackbar message
-        //     icon: const Icon(Icons.verified_outlined, color: Colors.black),
-        //     backgroundColor: Colors_Constants.app_white_color,
-        //     colorText: Colors.black,
-        //     snackPosition: SnackPosition.TOP,
-        //     duration: const Duration(
-        //         seconds: 3), // Duration for which the Snackbar is shown
-        //   );
-        //   Get.to(EmailVerification());
-        // }
-
-        // Get.to(Login());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');

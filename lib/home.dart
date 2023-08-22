@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class home extends StatelessWidget {
@@ -11,58 +12,56 @@ class home extends StatelessWidget {
 
     TextEditingController _nameController = TextEditingController();
     TextEditingController _priceController = TextEditingController();
-     Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
-
-    await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                ),
-                TextField(
-                  keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-                  controller: _priceController,
-                  decoration: const InputDecoration(
-                    labelText: 'Price',
+    Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
+      await showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext ctx) {
+            return Padding(
+              padding: EdgeInsets.only(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(labelText: 'Name'),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  child: const Text('Create'),
-                  onPressed: () async {
-                    final String name = _nameController.text;
-                    final double? price =
-                    double.tryParse(_priceController.text);
-                    if (price != null) {
+                  TextField(
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    controller: _priceController,
+                    decoration: const InputDecoration(
+                      labelText: 'Price',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    child: const Text('Create'),
+                    onPressed: () async {
+                      final String name = _nameController.text;
+                      final double? price =
+                          double.tryParse(_priceController.text);
+                      if (price != null) {
                         await _products.add({"name": name, "price": price});
 
-                      _nameController.text = '';
-                      _priceController.text = '';
+                        _nameController.text = '';
+                        _priceController.text = '';
                         Navigator.of(context).pop();
-                    }
-                  },
-                )
-              ],
-            ),
-          );
-
-        });
-  }
+                      }
+                    },
+                  )
+                ],
+              ),
+            );
+          });
+    }
 
     Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
       if (documentSnapshot != null) {

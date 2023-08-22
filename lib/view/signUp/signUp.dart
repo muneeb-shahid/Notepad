@@ -170,10 +170,12 @@ class SignUp extends StatelessWidget {
                   height: heightt * 0.05,
                 ),
                 customLogin_SignupButton(
-                    func: () => signUpController.register(context),
+                    func: () => signUpController.register(),
                     innerColor: Colors_Constants.app_pink_color,
                     textColor: Colors_Constants.app_white_color,
-                    text: "Register")
+                    text: "Register"
+                    
+                    )
               ]),
               SizedBox(
                 height: heightt * 0.02,

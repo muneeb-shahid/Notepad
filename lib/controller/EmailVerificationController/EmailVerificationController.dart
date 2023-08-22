@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notepad/view/login/login.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../home.dart';
@@ -17,10 +18,16 @@ class EmailVerificationController extends GetxController {
   bool _isEmailVerified = false;
   get isEmailVerified => _isEmailVerified;
 
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Get.offAll(Login());
+  }
+
   sendEmailVerificationCode() async {
     User? user = _auth.currentUser;
     if (user != null && !user.emailVerified) {
       await user.sendEmailVerification();
+
       Get.snackbar(
         'Email Verification', //Snackbar title
         'Verification email sent to ${user.email}', // Snackbar message
@@ -51,7 +58,6 @@ class EmailVerificationController extends GetxController {
   @override
   void dispose() {
     timer?.cancel();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -63,7 +69,7 @@ class EmailVerificationController extends GetxController {
     _isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (isEmailVerified) {
-      Get.to(home());
+      Get.offAll(home());
     }
   }
 }

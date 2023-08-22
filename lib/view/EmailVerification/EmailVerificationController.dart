@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/constants/colors_constants/colors_constants.dart';
 import 'package:notepad/constants/fonts_size_constant/fonts_size_constant.dart';
+import 'package:notepad/customButtons/Login&signupButton.dart';
 import 'package:notepad/home.dart';
+import 'package:notepad/view/login/login.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../controller/EmailVerificationController/EmailVerificationController.dart';
 
@@ -36,23 +39,50 @@ class EmailVerification extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'A verification email has been sent to \n\n${user}',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily:
-                                  Fonts_Size_Constants.regular_font_family,
-                              fontWeight: FontWeight.bold,
-                              color: Colors_Constants.app_grey_color,
-                              fontSize: Fonts_Size_Constants.text_font_size.sp),
+                        FittedBox(
+                          child: Text(
+                            'A verification email has been sent to \n\n${user}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily:
+                                    Fonts_Size_Constants.regular_font_family,
+                                fontWeight: FontWeight.bold,
+                                color: Colors_Constants.app_grey_color,
+                                fontSize:
+                                    Fonts_Size_Constants.text_font_size.sp),
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: emailVerificationController.screenHeight * 0.1,
+                      height: emailVerificationController.screenHeight * 0.05,
                     ),
-                    ElevatedButton(
-                        onPressed: () {}, child: Text("Resend Email"))
+                    Container(
+                      height: emailVerificationController.screenHeight * 0.3,
+                      child: Lottie.asset(
+                        "assets/images/verify email lottie.json",
+                        repeat: true,
+                        reverse: false,
+                        animate: true,
+                      ),
+                    ),
+                    SizedBox(
+                      height: emailVerificationController.screenHeight * 0.05,
+                    ),
+                    customLogin_SignupButton(
+                        func: () => emailVerificationController
+                            .sendEmailVerificationCode(),
+                        innerColor: Colors_Constants.app_pink_color,
+                        textColor: Colors_Constants.app_white_color,
+                        text: "Resend Email"),
+                    SizedBox(
+                      height: emailVerificationController.screenHeight * 0.05,
+                    ),
+                    customLogin_SignupButton(
+                        func: () => emailVerificationController.signOut(),
+                        innerColor: Colors_Constants.app_grey_color,
+                        textColor: Colors_Constants.app_white_color,
+                        text: "Cancel"),
                   ],
                 ),
               )),
