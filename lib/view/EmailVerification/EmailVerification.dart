@@ -10,6 +10,7 @@ import 'package:notepad/view/login/login.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../controller/EmailVerificationController/EmailVerificationController.dart';
+import '../../images/images.dart';
 
 class EmailVerification extends StatelessWidget {
   EmailVerification({super.key});
@@ -33,7 +34,7 @@ class EmailVerification extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image(image: AssetImage("assets/images/shape.png")),
+                        Image(image: AssetImage(App_Images.top_left_shape)),
                       ],
                     ),
 
@@ -61,7 +62,7 @@ class EmailVerification extends StatelessWidget {
                     Container(
                       height: emailVerificationController.screenHeight * 0.3,
                       child: Lottie.asset(
-                        "assets/images/verify email lottie.json",
+                        App_Images.verify_email_lottie_image,
                         repeat: true,
                         reverse: false,
                         animate: true,

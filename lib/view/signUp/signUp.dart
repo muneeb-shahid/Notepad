@@ -18,8 +18,10 @@ class SignUp extends StatelessWidget {
     SignUpController signUpController = Get.put(SignUpController());
     EmailPasswordValidation emailPasswordValidation =
         Get.put(EmailPasswordValidation());
+
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
+  
     return Scaffold(
       backgroundColor: Colors_Constants.app_background_color,
       body: SafeArea(
@@ -74,7 +76,11 @@ class SignUp extends StatelessWidget {
                               controller:
                                   signUpController.NameTextEditingController,
                               keyboardType: TextInputType.name,
-                            
+                              focusNode: signUpController.focusNode1,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(signUpController.focusNode2);
+                              },
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
                               validator: signUpController.validateName,
@@ -103,6 +109,11 @@ class SignUp extends StatelessWidget {
                             // Email TextFormField
                             TextFormField(
                               controller: signUpController.emailAddress,
+                              focusNode: signUpController.focusNode2,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(signUpController.focusNode3);
+                              },
                               keyboardType: TextInputType.name,
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
@@ -134,6 +145,7 @@ class SignUp extends StatelessWidget {
                             TextFormField(
                               obscureText: signUpController.isObscured.value,
                               controller: signUpController.password,
+                              focusNode: signUpController.focusNode3,
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
                               validator:
@@ -227,5 +239,6 @@ class SignUp extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }

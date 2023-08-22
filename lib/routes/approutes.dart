@@ -3,7 +3,7 @@ import 'package:notepad/routes/routes_name.dart';
 import 'package:notepad/view/signUp/signUp.dart';
 
 import '../customButtons/login_signup_button.dart';
-import '../view/EmailVerification/EmailVerificationController.dart';
+import '../view/EmailVerification/EmailVerification.dart';
 import '../view/Start_Screen/Start_Screen.dart';
 import '../view/login/login.dart';
 

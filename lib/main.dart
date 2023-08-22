@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           // getPages: AppRoutes.appRoutes(),
-          home: SignUp(),
+          home: Login(),
         );
       },
     );

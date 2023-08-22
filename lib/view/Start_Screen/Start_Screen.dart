@@ -31,7 +31,7 @@ class Start_Screen extends StatelessWidget {
                   ),
                   Positioned(
                       child:
-                          Image(image: AssetImage("assets/images/shape.png"))),
+                         Image(image: AssetImage("assets/images/shape.png")),),
                   Positioned(
                     top: heightt * 0.25,
                     left: widthh * 0.1,
