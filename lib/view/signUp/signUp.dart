@@ -64,107 +64,115 @@ class SignUp extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Form(
-                      key: signUpController.formKey,
-                      child: Column(
-                        children: [
-                          // Name TextFormField
-                          TextFormField(
-                             controller:
-                            signUpController.NameTextEditingController,
-                            keyboardType: TextInputType.name,
-                            style: TextStyle(
-                                color: Colors_Constants.app_black_color),
-                            validator: signUpController.validateName,
-                            // onChanged: (value) {
-                            //   _email = value;
-                            // },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors_Constants.app_white_color,
-                              hintText: 'Enter your full name',
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
+                  child: Obx(
+                    () => Form(
+                        key: signUpController.formKey,
+                        child: Column(
+                          children: [
+                            // Name TextFormField
+                            TextFormField(
+                              controller:
+                                  signUpController.NameTextEditingController,
+                              keyboardType: TextInputType.name,
+                            
+                              style: TextStyle(
+                                  color: Colors_Constants.app_black_color),
+                              validator: signUpController.validateName,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors_Constants.app_white_color,
+                                hintText: 'Enter your full name',
+                                focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                   borderSide: BorderSide(
-                                      width: 2, color: Colors.white)),
-                              prefixIcon:
-                                  Icon(Icons.person_2, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: heightt * 0.05,
-                          ),
-                          // Email TextFormField
-                          TextFormField(
-                           controller:  signUpController.emailAddress,
-                            keyboardType: TextInputType.name,
-                            style: TextStyle(
-                                color: Colors_Constants.app_black_color),
-                            validator: emailPasswordValidation.validateEmail,
-                            // onChanged: (value) {
-                            //   _email = value;
-                            // },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors_Constants.app_white_color,
-                              hintText: 'Enter your email',
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: Colors.white,
+                                    width: 2,
+                                    color: Colors.white,
+                                  ),
                                 ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                        width: 2, color: Colors.white)),
+                                prefixIcon:
+                                    Icon(Icons.person_2, color: Colors.black),
                               ),
-                              border: OutlineInputBorder(
+                            ),
+                            SizedBox(
+                              height: heightt * 0.05,
+                            ),
+                            // Email TextFormField
+                            TextFormField(
+                              controller: signUpController.emailAddress,
+                              keyboardType: TextInputType.name,
+                              style: TextStyle(
+                                  color: Colors_Constants.app_black_color),
+                              validator: emailPasswordValidation.validateEmail,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors_Constants.app_white_color,
+                                hintText: 'Enter your email',
+                                focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                   borderSide: BorderSide(
-                                      width: 2, color: Colors.white)),
-                              prefixIcon:
-                                  Icon(Icons.email, color: Colors.black),
+                                    width: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                        width: 2, color: Colors.white)),
+                                prefixIcon:
+                                    Icon(Icons.email, color: Colors.black),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: heightt * 0.05,
-                          ),
+                            SizedBox(
+                              height: heightt * 0.05,
+                            ),
 
-                          // Password TextFormField
-                          TextFormField(
-                              controller:  signUpController.password,
-                            keyboardType: TextInputType.name,
-                            style: TextStyle(
-                                color: Colors_Constants.app_black_color),
-                            validator: emailPasswordValidation.validatePassword,
-                            // onChanged: (value) {
-                            //   _email = value;
-                            // },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors_Constants.app_white_color,
-                              hintText: 'Enter your password',
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
+                            // Password TextFormField
+                            TextFormField(
+                              obscureText: signUpController.isObscured.value,
+                              controller: signUpController.password,
+                              style: TextStyle(
+                                  color: Colors_Constants.app_black_color),
+                              validator:
+                                  emailPasswordValidation.validatePassword,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors_Constants.app_white_color,
+                                hintText: 'Enter your password',
+                                focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                   borderSide: BorderSide(
-                                      width: 2, color: Colors.white)),
-                              prefixIcon:
-                                  Icon(Icons.password, color: Colors.black),
+                                    width: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                        width: 2, color: Colors.white)),
+                                prefixIcon:
+                                    Icon(Icons.password, color: Colors.black),
+                                suffixIconColor:
+                                    Colors_Constants.app_black_color,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    signUpController
+                                        .toggleObscure(); // Call the _toggleObscure method
+                                  },
+                                  child: Icon(
+                                    signUpController.isObscured.value
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      )),
+                          ],
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: heightt * 0.05,
@@ -173,9 +181,7 @@ class SignUp extends StatelessWidget {
                     func: () => signUpController.register(),
                     innerColor: Colors_Constants.app_pink_color,
                     textColor: Colors_Constants.app_white_color,
-                    text: "Register"
-                    
-                    )
+                    text: "Register")
               ]),
               SizedBox(
                 height: heightt * 0.02,

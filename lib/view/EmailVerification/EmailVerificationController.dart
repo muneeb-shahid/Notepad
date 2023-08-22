@@ -36,6 +36,7 @@ class EmailVerification extends StatelessWidget {
                         Image(image: AssetImage("assets/images/shape.png")),
                       ],
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

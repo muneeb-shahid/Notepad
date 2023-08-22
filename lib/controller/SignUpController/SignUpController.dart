@@ -10,7 +10,7 @@ import '../../view/EmailVerification/EmailVerificationController.dart';
 
 class SignUpController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Timer? timer;
+  var isObscured = true.obs;
   bool _isEmailVerified = false;
   get isEmailVerified => _isEmailVerified;
 
@@ -27,6 +27,18 @@ class SignUpController extends GetxController {
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
   get password => _passwordTextEditingController;
+
+  // FocusNode _focusNode1 = FocusNode();
+  // get focusNode1 => _focusNode1;
+  // FocusNode _focusNode2 = FocusNode();
+  // get focusNode2 => _focusNode2;
+
+  // FocusNode _focusNode3 = FocusNode();
+  // get focusNode3 => _focusNode3;
+
+  void toggleObscure() {
+    isObscured.toggle(); // Toggle the value of _isObscured
+  }
 
   String? validateName(String? input) {
     if (input == null || input.isEmpty) {
@@ -45,6 +57,10 @@ class SignUpController extends GetxController {
           email: emailAddress.text,
           password: password.text,
         );
+        _nameTextEditingController.clear();
+        _emailTextEditingController.clear();
+        _passwordTextEditingController.clear();
+
         Get.to(EmailVerification());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -76,6 +92,18 @@ class SignUpController extends GetxController {
         );
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _nameTextEditingController.dispose();
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    // _focusNode1.dispose();
+    // _focusNode2.dispose();
+    // _focusNode3.dispose();
+
+    super.dispose();
   }
 
   // sendEmailVerificationCode() async {
