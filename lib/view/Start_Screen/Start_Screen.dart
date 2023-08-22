@@ -79,9 +79,7 @@ class Start_Screen extends StatelessWidget {
                       left: widthh * 0.1,
                       right: widthh * 0.1,
                       child: Login_SignUp_Button().customButton(context,
-                          nextScreen:
-                        SignUp(),
-                      
+                          nextScreen: SignUp(),
                           innerColor: Colors_Constants.app_pink_color,
                           textColor: Colors_Constants.app_white_color,
                           text: "Get Started"))
@@ -92,6 +90,5 @@ class Start_Screen extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }
