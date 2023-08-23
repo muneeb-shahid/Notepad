@@ -18,35 +18,30 @@ class Start_Screen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors_Constants.app_background_color,
       body: SafeArea(
-        top: true,
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  Container(
-                    color: Colors_Constants.app_background_color,
-                    height: double.infinity,
-                    width: double.infinity,
-                  ),
-                  Positioned(
-                      child:
-                         Image(image: AssetImage("assets/images/shape.png")),),
-                  Positioned(
-                    top: heightt * 0.25,
-                    left: widthh * 0.1,
-                    right: widthh * 0.1,
-                    child: Center(
+          top: true,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image(image: AssetImage("assets/images/shape.png")),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(children: [
+                    Center(
                       child: Image(
                           image: AssetImage(
                               "assets/images/Start screen image.png")),
                     ),
-                  ),
-                  Positioned(
-                      bottom: heightt * 0.3,
-                      left: widthh * 0.1,
-                      right: widthh * 0.1,
-                      child: Center(
+                    SizedBox(
+                      height: heightt * 0.1,
+                    ),
+                    Center(
+                      child: FittedBox(
                         child: Text(
                           "Get things done with TODO",
                           style: TextStyle(
@@ -57,38 +52,37 @@ class Start_Screen extends StatelessWidget {
                               fontSize:
                                   Fonts_Size_Constants.heading_font_size.sp),
                         ),
-                      )),
-                  Positioned(
-                      bottom: heightt * 0.2,
-                      left: widthh * 0.1,
-                      right: widthh * 0.1,
-                      child: Center(
-                        child: Text(
-                          "Efficiently manage tasks and boost productivity with this intuitive ToDo app.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily:
-                                  Fonts_Size_Constants.regular_font_family,
-                              fontWeight: FontWeight.bold,
-                              color: Colors_Constants.app_grey_color,
-                              fontSize: Fonts_Size_Constants.text_font_size.sp),
-                        ),
-                      )),
-                  Positioned(
-                      bottom: heightt * 0.06,
-                      left: widthh * 0.1,
-                      right: widthh * 0.1,
-                      child: Login_SignUp_Button().customButton(context,
-                          nextScreen: SignUp(),
-                          innerColor: Colors_Constants.app_pink_color,
-                          textColor: Colors_Constants.app_white_color,
-                          text: "Get Started"))
-                ],
-              ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: heightt * 0.02,
+                    ),
+                    Center(
+                      child: Text(
+                        "Efficiently manage tasks and boost productivity with this intuitive ToDo app.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily:
+                                Fonts_Size_Constants.regular_font_family,
+                            fontWeight: FontWeight.bold,
+                            color: Colors_Constants.app_grey_color,
+                            fontSize: Fonts_Size_Constants.text_font_size.sp),
+                      ),
+                    ),
+                    SizedBox(
+                      height: heightt * 0.15,
+                    ),
+                    Login_SignUp_Button().customButton(context,
+                        nextScreen: SignUp(),
+                        innerColor: Colors_Constants.app_pink_color,
+                        textColor: Colors_Constants.app_white_color,
+                        text: "Get Started")
+                  ]),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          )),
     );
+
   }
 }

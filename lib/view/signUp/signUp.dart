@@ -74,7 +74,7 @@ class SignUp extends StatelessWidget {
                             // Name TextFormField
                             TextFormField(
                               controller: signUpController
-                                  .NameTextEditingController.clear(),
+                                  .NameTextEditingController,
                               keyboardType: TextInputType.name,
                               focusNode: signUpController.focusNode1,
                               onFieldSubmitted: (value) {
@@ -108,7 +108,7 @@ class SignUp extends StatelessWidget {
                             ),
                             // Email TextFormField
                             TextFormField(
-                              controller: signUpController.emailAddress.clear(),
+                              controller: signUpController.emailAddress,
                               focusNode: signUpController.focusNode2,
                               onFieldSubmitted: (value) {
                                 FocusScope.of(context)
@@ -144,7 +144,7 @@ class SignUp extends StatelessWidget {
                             // Password TextFormField
                             TextFormField(
                               obscureText: signUpController.isObscured.value,
-                              controller: signUpController.password.clear(),
+                              controller: signUpController.password,
                               focusNode: signUpController.focusNode3,
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
