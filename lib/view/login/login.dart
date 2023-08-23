@@ -84,7 +84,7 @@ class Login extends StatelessWidget {
                           children: [
                             // Email TextFormField
                             TextFormField(
-                              controller: loginController.emailAddress,
+                              controller: loginController.login_emailAddress,
                               focusNode: loginController.focusNode1,
                               onFieldSubmitted: (value) {
                                 FocusScope.of(context)
@@ -120,7 +120,7 @@ class Login extends StatelessWidget {
                             // Password TextFormField
                             TextFormField(
                               obscureText: signUpController.isObscured.value,
-                              controller: loginController.password,
+                              controller: loginController.login_password,
                               focusNode: loginController.focusNode2,
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
@@ -163,10 +163,36 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+                  height: heightt * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Forget password",
+                          style: TextStyle(
+                              fontFamily:
+                                  Fonts_Size_Constants.regular_font_family,
+                              fontWeight: FontWeight.bold,
+                              color: Colors_Constants.app_grey_color,
+                              fontSize: Fonts_Size_Constants.text_font_size.sp),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: heightt * 0.01,
+                ),
+                SizedBox(
                   height: heightt * 0.03,
                 ),
                 customLogin_SignupButton(
-                    func: () => null,
+                    func: () => loginController.login(),
                     innerColor: Colors_Constants.app_pink_color,
                     textColor: Colors_Constants.app_white_color,
                     text: "Login")

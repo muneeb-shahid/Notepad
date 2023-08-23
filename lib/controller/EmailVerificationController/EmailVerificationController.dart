@@ -63,13 +63,13 @@ class EmailVerificationController extends GetxController {
 
   Future<void> checkEmailVerified() async {
     await FirebaseAuth.instance.currentUser!.reload();
-
     _isEmailVerified = !_isEmailVerified;
 
     _isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (isEmailVerified) {
       Get.offAll(home());
+      timer?.cancel();
     }
   }
 }
