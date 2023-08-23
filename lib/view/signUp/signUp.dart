@@ -21,7 +21,7 @@ class SignUp extends StatelessWidget {
 
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
-  
+
     return Scaffold(
       backgroundColor: Colors_Constants.app_background_color,
       body: SafeArea(
@@ -39,7 +39,7 @@ class SignUp extends StatelessWidget {
               Column(children: [
                 Center(
                   child: Text(
-                    "Welcome onboard!",
+                    "Welcome onBoard!",
                     style: TextStyle(
                         fontFamily: Fonts_Size_Constants.regular_font_family,
                         fontWeight: FontWeight.bold,
@@ -73,8 +73,8 @@ class SignUp extends StatelessWidget {
                           children: [
                             // Name TextFormField
                             TextFormField(
-                              controller:
-                                  signUpController.NameTextEditingController.clear(),
+                              controller: signUpController
+                                  .NameTextEditingController.clear(),
                               keyboardType: TextInputType.name,
                               focusNode: signUpController.focusNode1,
                               onFieldSubmitted: (value) {
@@ -239,6 +239,5 @@ class SignUp extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }

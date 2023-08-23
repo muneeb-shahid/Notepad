@@ -3,7 +3,7 @@ class RoutesName {
   static String Login = "/Login";
   static String SignUp = "/SignUp";
   static String EmailVerification = "/EmailVerification";
-  static String BlogFullPost = "/BlogFullPost";
+  static String ForgetPassword = "/ForgetPassword";
   static String Profile = "/Profile";
 
   

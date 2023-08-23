@@ -10,6 +10,7 @@ import 'package:notepad/functions/Email&PasswordValidation/Email_Password_Valida
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
 import '../../images/images.dart';
+import '../forgetpassword/forgetpassword.dart';
 import '../signUp/signUp.dart';
 
 class Login extends StatelessWidget {
@@ -42,7 +43,7 @@ class Login extends StatelessWidget {
               Column(children: [
                 Center(
                   child: Text(
-                    "Welcome back!",
+                    "Welcome Back!",
                     style: TextStyle(
                         fontFamily: Fonts_Size_Constants.regular_font_family,
                         fontWeight: FontWeight.bold,
@@ -77,7 +78,9 @@ class Login extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Obx(
+                  child: 
+
+                  Obx(
                     () => Form(
                         key: loginController.formKey,
                         child: Column(
@@ -90,7 +93,7 @@ class Login extends StatelessWidget {
                                 FocusScope.of(context)
                                     .requestFocus(loginController.focusNode2);
                               },
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.emailAddress,
                               style: TextStyle(
                                   color: Colors_Constants.app_black_color),
                               validator: emailPasswordValidation.validateEmail,
@@ -161,6 +164,7 @@ class Login extends StatelessWidget {
                           ],
                         )),
                   ),
+              
                 ),
                 SizedBox(
                   height: heightt * 0.02,
@@ -171,7 +175,9 @@ class Login extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 30),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(ForgetPassword());
+                        },
                         child: Text(
                           "Forget password",
                           style: TextStyle(
