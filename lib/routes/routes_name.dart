@@ -4,7 +4,10 @@ class RoutesName {
   static String SignUp = "/SignUp";
   static String EmailVerification = "/EmailVerification";
   static String ForgetPassword = "/ForgetPassword";
-  static String HomePage = "/HomePage";
+  static String Note = "/Note";
+  static String Checklist = "/Checklist";
+  static String Folder = "/Folder";
+
 
   
 }

@@ -2,15 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:notepad/view/Note/Note.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
-
-
- 
+import '../Checklist/Checklist.dart';
+import '../Folder/Folder.dart';
 
 enum _menuValues { Note, Checklist, Folder }
-
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -42,40 +41,114 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors_Constants.app_background_color,
       appBar: AppBar(
         backgroundColor: Colors_Constants.app_pink_color,
-        title: ListTile(
-          title: Text(
-            "Notes",
-            style: TextStyle(
-                fontFamily: Fonts_Size_Constants.Philosopher,
-                fontWeight: FontWeight.bold,
-                fontSize: Fonts_Size_Constants.heading_font_size.sp),
-          ),
-          trailing: SizedBox(
-              width: widthh * 0.3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {}),
-                  PopupMenuButton<_menuValues>(
-                      itemBuilder: (context) => [
-                            PopupMenuItem(child: Text("Note"),value:_menuValues.Note ,),
-                            PopupMenuItem(child: Text("Checklist"),value:_menuValues.Checklist ,),
-                            PopupMenuItem(child: Text("Folder"),value:_menuValues.Folder ,),
-                          ])
-                ],
-              )),
+        title: Text(
+          "Notes",
+          style: TextStyle(
+              fontFamily: Fonts_Size_Constants.Philosopher,
+              fontWeight: FontWeight.bold,
+              fontSize: Fonts_Size_Constants.heading_font_size.sp),
         ),
+        actions: [
+          IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {}),
+          PopupMenuButton<_menuValues>(
+            
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              
+            ),
+            color: Colors.white,
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.note_add,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      "Note",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts_Size_Constants.regular_font_family,
+                          fontSize:
+                              Fonts_Size_Constants.sub_heading_font_size.sp),
+                    ),
+                  ],
+                ),
+                value: _menuValues.Note,
+              ),
+              PopupMenuDivider(),
+              PopupMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.checklist,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      "Checklist",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts_Size_Constants.regular_font_family,
+                          fontSize:
+                              Fonts_Size_Constants.sub_heading_font_size.sp),
+                    ),
+                  ],
+                ),
+                value: _menuValues.Checklist,
+              ),
+              PopupMenuDivider(),
+              PopupMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.folder,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      "Folder",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts_Size_Constants.regular_font_family,
+                          fontSize:
+                              Fonts_Size_Constants.sub_heading_font_size.sp),
+                    ),
+                  ],
+                ),
+                value: _menuValues.Folder,
+              ),
+            ],
+            onSelected: (value) {
+              switch (value) {
+                case _menuValues.Note:
+                  Get.to(Note());
+                  break;
+                case _menuValues.Checklist:
+                  Get.to(Checklist());
+                  break;
+                case _menuValues.Folder:
+                  Get.to(Folder());
+                  break;
+                default:
+              }
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ElevatedButton(

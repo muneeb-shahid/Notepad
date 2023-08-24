@@ -3,8 +3,11 @@ import 'package:notepad/routes/routes_name.dart';
 import 'package:notepad/view/signUp/signUp.dart';
 
 import '../customButtons/login_signup_button.dart';
+import '../view/Checklist/Checklist.dart';
 import '../view/EmailVerification/EmailVerification.dart';
+import '../view/Folder/Folder.dart';
 import '../view/HomeScreen/Home_screen.dart';
+import '../view/Note/Note.dart';
 import '../view/Start_Screen/Start_Screen.dart';
 import '../view/forgetpassword/forgetpassword.dart';
 import '../view/login/login.dart';
@@ -32,5 +35,25 @@ class AppRoutes {
           name: RoutesName.EmailVerification,
           page: () => HomePage(),
         ),
+         GetPage(
+          name: RoutesName.Note,
+          page: () => Note(),
+        ),
+ GetPage(
+          name: RoutesName.Checklist,
+          page: () => Checklist(),
+        ),
+
+ GetPage(
+          name: RoutesName.Folder,
+          page: () => Folder(),
+        ),
+
+
+
+
+
+
+        
       ];
 }
