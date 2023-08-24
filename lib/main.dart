@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/view/HomeScreen/Home_screen.dart';
+import 'package:notepad/view/Note/Note.dart';
 import 'package:notepad/view/Start_Screen/Start_Screen.dart';
 import 'package:notepad/view/login/login.dart';
 import 'package:notepad/view/signUp/signUp.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           // getPages: AppRoutes.appRoutes(),
-          home: HomePage()
+          home: Note()
         );
       },
     );

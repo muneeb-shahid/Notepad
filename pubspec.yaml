@@ -41,7 +41,7 @@ dependencies:
   cloud_firestore: ^4.8.5
   firebase_auth: ^4.7.3
   lottie: ^2.6.0
-  flutter_quill: ^7.4.1
+  html_editor_enhanced: ^2.5.1
 
 dev_dependencies:
   flutter_test:

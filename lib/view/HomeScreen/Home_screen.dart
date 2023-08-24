@@ -56,10 +56,11 @@ class HomePage extends StatelessWidget {
               ),
               onPressed: () {}),
           PopupMenuButton<_menuValues>(
-            
+            offset: Offset(0, heightt * 0.08),
             shape: RoundedRectangleBorder(
+              side:
+                  BorderSide(width: 1, color: Colors_Constants.app_black_color),
               borderRadius: BorderRadius.circular(10.0),
-              
             ),
             color: Colors.white,
             icon: Icon(
