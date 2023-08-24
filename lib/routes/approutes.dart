@@ -4,6 +4,7 @@ import 'package:notepad/view/signUp/signUp.dart';
 
 import '../customButtons/login_signup_button.dart';
 import '../view/EmailVerification/EmailVerification.dart';
+import '../view/HomeScreen/Home_screen.dart';
 import '../view/Start_Screen/Start_Screen.dart';
 import '../view/forgetpassword/forgetpassword.dart';
 import '../view/login/login.dart';
@@ -27,10 +28,9 @@ class AppRoutes {
           name: RoutesName.EmailVerification,
           page: () => ForgetPassword(),
         ),
-
-
-
-
-        
+        GetPage(
+          name: RoutesName.EmailVerification,
+          page: () => HomePage(),
+        ),
       ];
 }

@@ -78,9 +78,7 @@ class Login extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: 
-
-                  Obx(
+                  child: Obx(
                     () => Form(
                         key: loginController.formKey,
                         child: Column(
@@ -164,7 +162,6 @@ class Login extends StatelessWidget {
                           ],
                         )),
                   ),
-              
                 ),
                 SizedBox(
                   height: heightt * 0.02,
@@ -247,6 +244,5 @@ class Login extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }

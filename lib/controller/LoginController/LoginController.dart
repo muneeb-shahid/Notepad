@@ -8,6 +8,9 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
 
+  bool _loading = false;
+  get loading => _loading;
+
   final TextEditingController _login_EmailTextEditingController =
       TextEditingController();
   get login_emailAddress => _login_EmailTextEditingController;

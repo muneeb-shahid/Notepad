@@ -59,7 +59,7 @@ class Start_Screen extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        "Efficiently manage tasks and boost productivity with this intuitive ToDo app.",
+                        "Efficiently manage tasks and boost \nproductivity with this intuitive ToDo app.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily:
@@ -83,6 +83,5 @@ class Start_Screen extends StatelessWidget {
             ),
           )),
     );
-
   }
 }

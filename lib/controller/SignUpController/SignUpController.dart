@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notepad/constants/colors_constants/colors_constants.dart';
+import 'package:notepad/view/login/login.dart';
 
 import '../../view/EmailVerification/EmailVerification.dart';
 
@@ -77,6 +78,7 @@ class SignUpController extends GetxController {
             duration: const Duration(
                 seconds: 3), // Duration for which the Snackbar is shown
           );
+          Get.to(Login());
         }
       } catch (e) {
         print(e);
