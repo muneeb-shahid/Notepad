@@ -23,7 +23,8 @@ class Note extends StatelessWidget {
         fontFamily: 'Roboto');
     final _hintTextStyle = const TextStyle(
         fontSize: 18, color: Colors.black12, fontWeight: FontWeight.normal);
-
+    var heightt = MediaQuery.of(context).size.height * 1;
+    var widthh = MediaQuery.of(context).size.width * 1;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors_Constants.app_pink_color,
@@ -33,44 +34,18 @@ class Note extends StatelessWidget {
         children: [
           ToolBar(
             toolBarColor: _toolbarColor,
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             iconSize: 25,
             iconColor: _toolbarIconColor,
             activeIconColor: Colors.greenAccent.shade400,
             controller: noteController.controller,
             crossAxisAlignment: WrapCrossAlignment.start,
             direction: Axis.horizontal,
-            customButtons: [
-              Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                    color: noteController.hasFocus ? Colors.green : Colors.grey,
-                    borderRadius: BorderRadius.circular(15)),
-              ),
-              InkWell(
-                  onTap: () => noteController.controller.unFocus(),
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Colors.black,
-                  )),
-              InkWell(
-                  onTap: () async {
-                    var selectedText =
-                        await noteController.controller.getSelectedText();
-                    debugPrint('selectedText $selectedText');
-                    var selectedHtmlText =
-                        await noteController.controller.getSelectedHtmlText();
-                    debugPrint('selectedHtmlText $selectedHtmlText');
-                  },
-                  child: const Icon(
-                    Icons.add_circle,
-                    color: Colors.black,
-                  )),
-            ],
           ),
+        
           Expanded(
             child: QuillHtmlEditor(
+              
               text: "<h1>Hello</h1>This is a quill html editor example 😊",
               hintText: 'Hint text goes here',
               controller: noteController.controller,
@@ -82,7 +57,7 @@ class Note extends StatelessWidget {
               hintTextStyle: _hintTextStyle,
               hintTextAlign: TextAlign.start,
               padding: const EdgeInsets.only(left: 10, top: 10),
-              hintTextPadding: const EdgeInsets.only(left: 20),
+              hintTextPadding: const EdgeInsets.only(left: 20, right: 20),
               backgroundColor: _backgroundColor,
               inputAction: InputAction.newline,
               onEditingComplete: (s) => debugPrint('Editing completed $s'),
@@ -90,20 +65,12 @@ class Note extends StatelessWidget {
                 return const Center(
                     child: CircularProgressIndicator(
                   strokeWidth: 1,
-                  color: Colors.red,
+                  color: Colors.green,
                 ));
               },
-              // onFocusChanged: (focus) {
-              //   debugPrint('has focus $focus');
-              //   setState(() {
-              //     _hasFocus = focus;
-              //   });
-              // },
-
               onFocusChanged: (bool focus) {
                 noteController.hasFocus.value = focus;
               },
-
               onTextChanged: (text) => debugPrint('widget text change $text'),
               onEditorCreated: () {
                 debugPrint('Editor has been loaded');
@@ -114,6 +81,7 @@ class Note extends StatelessWidget {
                   debugPrint('index ${sel.index}, range ${sel.length}'),
             ),
           ),
+        
         ],
       ),
     );
