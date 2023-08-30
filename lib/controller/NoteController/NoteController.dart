@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
-import '../../constants/colors_constants/colors_constants.dart';
 
 class NoteController extends GetxController {
   TextEditingController _titleController = TextEditingController();

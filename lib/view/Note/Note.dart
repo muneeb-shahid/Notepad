@@ -33,12 +33,7 @@ class Note extends StatelessWidget {
         backgroundColor: Colors_Constants.app_background_color,
         appBar: AppBar(
           backgroundColor: Colors_Constants.app_pink_color,
-          // leading: IconButton(
-          //   onPressed: () {
-          //     Get.back();
-          //   },
-          //   icon: Icon(Icons.arrow_back_ios_new_outlined),
-          // ),
+       
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors_Constants.app_pink_color,
@@ -46,19 +41,20 @@ class Note extends StatelessWidget {
             if (noteController.formKey.currentState!.validate()) {
               noteController.formKey.currentState!.save();
 
-              final String name = noteController.TitleController.text;
-              final String price = noteController.ContentController.text;
-              if (price != null) {
-                await _notes.add({"title": name, "content": price});
+              final String title = noteController.TitleController.text;
+              final String content = noteController.ContentController.text;
+              if (content != null) {
+                await _notes.add({"title": title, "content": content});
 
                 noteController.TitleController.text = '';
                 noteController.ContentController.text = '';
-                 Get.back();
+                Get.back();
               }
             }
           },
           child: Icon(Icons.save),
         ),
+
         body: SafeArea(
             top: true,
             child: SingleChildScrollView(

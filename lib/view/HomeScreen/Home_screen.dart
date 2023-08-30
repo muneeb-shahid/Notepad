@@ -10,6 +10,7 @@ import 'package:notepad/view/Note/Note.dart';
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
 import '../Checklist/Checklist.dart';
+import '../EditPost/EditPost.dart';
 import '../Folder/Folder.dart';
 
 enum _menuValues { Note, Checklist, Folder }
@@ -179,6 +180,7 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final DocumentSnapshot documentSnapshot =
                         streamSnapshots.data!.docs[index];
+
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Card(
@@ -211,10 +213,12 @@ class HomePage extends StatelessWidget {
                               trailing: SizedBox(
                                   width: 100,
                                   child: Row(children: [
-                                    // IconButton(
-                                    //     icon: const Icon(Icons.edit),
-                                    //     onPressed: () => homeScreenController
-                                    //         .updateNote(documentSnapshot)),
+                                    IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: () {
+                                          Get.to(
+                                          EditPost(editNote: documentSnapshot));
+                                        }),
                                     IconButton(
                                         icon: const Icon(Icons.delete),
                                         onPressed: () {
