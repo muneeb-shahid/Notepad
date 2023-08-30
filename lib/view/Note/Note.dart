@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/constants/colors_constants/colors_constants.dart';
+import 'package:notepad/constants/fonts_size_constant/fonts_size_constant.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../controller/NoteController/NoteController.dart';
@@ -24,30 +26,34 @@ class Note extends StatelessWidget {
     // final _hintTextStyle = const TextStyle(
     //     fontSize: 18, color: Colors.black12, fontWeight: FontWeight.normal);
     NoteController noteController = Get.put(NoteController());
-    CollectionReference _products =
-        FirebaseFirestore.instance.collection('products');
+    CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
     return Scaffold(
+        backgroundColor: Colors_Constants.app_background_color,
         appBar: AppBar(
           backgroundColor: Colors_Constants.app_pink_color,
-          leading: IconButton(
-            onPressed: () async {},
-            icon: Icon(Icons.save_rounded),
-          ),
+          // leading: IconButton(
+          //   onPressed: () {
+          //     Get.back();
+          //   },
+          //   icon: Icon(Icons.arrow_back_ios_new_outlined),
+          // ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors_Constants.app_pink_color,
           onPressed: () async {
             if (noteController.formKey.currentState!.validate()) {
               noteController.formKey.currentState!.save();
 
-              final String name = noteController.NameController.text;
-              final String price = noteController.PriceController.text;
+              final String name = noteController.TitleController.text;
+              final String price = noteController.ContentController.text;
               if (price != null) {
-                await _products.add({"name": name, "price": price});
+                await _notes.add({"title": name, "content": price});
 
-                noteController.NameController.text = '';
-                noteController.PriceController.text = '';
+                noteController.TitleController.text = '';
+                noteController.ContentController.text = '';
+                 Get.back();
               }
             }
           },
@@ -63,11 +69,17 @@ class Note extends StatelessWidget {
                       child: Column(
                         children: [
                           TextFormField(
-                            controller: noteController.NameController,
-                            decoration:
-                                const InputDecoration(labelText: 'Title'),
                             style: TextStyle(
-                                color: Colors_Constants.app_black_color),
+                                fontFamily:
+                                    Fonts_Size_Constants.heading_font_family,
+                                fontWeight: FontWeight.bold,
+                                color: Colors_Constants.app_black_color,
+                                fontSize:
+                                    Fonts_Size_Constants.heading_font_size.sp),
+                            controller: noteController.TitleController,
+                            decoration: const InputDecoration(
+                              hintText: 'Title',
+                            ),
                             validator: noteController.validateTitle,
                             focusNode: noteController.focusNode1,
                             onFieldSubmitted: (value) {
@@ -77,11 +89,15 @@ class Note extends StatelessWidget {
                           ),
                           TextFormField(
                             maxLines: 50,
-                            controller: noteController.PriceController,
-                            decoration:
-                                const InputDecoration(labelText: 'Content'),
+                            controller: noteController.ContentController,
+                            decoration: const InputDecoration(
+                              hintText: 'Content',
+                            ),
                             style: TextStyle(
-                                color: Colors_Constants.app_black_color),
+                              fontFamily:
+                                  Fonts_Size_Constants.regular_font_family,
+                              color: Colors_Constants.app_black_color,
+                            ),
                             validator: noteController.validateContent,
                             focusNode: noteController.focusNode2,
                           ),

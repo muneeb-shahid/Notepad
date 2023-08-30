@@ -12,9 +12,9 @@ class home extends StatelessWidget {
         FirebaseFirestore.instance.collection('products');
 
     TextEditingController _nameController = TextEditingController();
-   
+
     TextEditingController _priceController = TextEditingController();
-   
+
     Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
       await showModalBottomSheet(
           isScrollControlled: true,
@@ -135,8 +135,8 @@ class home extends StatelessWidget {
           onPressed: () => _create(),
           child: Icon(Icons.create),
         ),
-        body: 
-        SafeArea(
+
+        body: SafeArea(
           top: true,
           child: StreamBuilder(
             stream: _products.snapshots(),
@@ -168,10 +168,7 @@ class home extends StatelessWidget {
                                     onPressed: () {
                                       _delete(documentSnapshot.id);
                                     }),
-                              ]
-                              )
-                              )
-                              ),
+                              ]))),
                     );
                   },
                 );
@@ -180,8 +177,9 @@ class home extends StatelessWidget {
               }
             },
           ),
-        ));
-
-
+        )
+        );
+  
+  
   }
 }

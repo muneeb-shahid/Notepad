@@ -6,11 +6,11 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 import '../../constants/colors_constants/colors_constants.dart';
 
 class NoteController extends GetxController {
-  TextEditingController _nameController = TextEditingController();
-  get NameController => _nameController;
+  TextEditingController _titleController = TextEditingController();
+  get TitleController => _titleController;
 
-  TextEditingController _priceController = TextEditingController();
-  get PriceController => _priceController;
+  TextEditingController _contentController = TextEditingController();
+  get ContentController => _contentController;
 
   FocusNode _focusNode1 = FocusNode();
   get focusNode1 => _focusNode1;
@@ -21,126 +21,20 @@ class NoteController extends GetxController {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
-  CollectionReference _products =
-      FirebaseFirestore.instance.collection('products');
+  CollectionReference _notes =
+      FirebaseFirestore.instance.collection('notes');
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _priceController.dispose();
+    _titleController.dispose();
+    _contentController.dispose();
     _focusNode1.dispose();
     _focusNode2.dispose();
 
     super.dispose();
   }
 
-  // Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
-  //   await showModalBottomSheet(
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (BuildContext ctx) {
-  //         return Padding(
-  //           padding: EdgeInsets.only(
-  //               top: 20,
-  //               left: 20,
-  //               right: 20,
-  //               bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               TextField(
-  //                 controller: _nameController,
-  //                 decoration: const InputDecoration(labelText: 'Name'),
-  //               ),
-  //               TextField(
-  //                 keyboardType:
-  //                     const TextInputType.numberWithOptions(decimal: true),
-  //                 controller: _priceController,
-  //                 decoration: const InputDecoration(
-  //                   labelText: 'Price',
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               ElevatedButton(
-  //                 child: const Text('Create'),
-  //                 onPressed: () async {
-  //                   final String name = _nameController.text;
-  //                   final double? price =
-  //                       double.tryParse(_priceController.text);
-  //                   if (price != null) {
-  //                     await _products.add({"name": name, "price": price});
-
-  //                     _nameController.text = '';
-  //                     _priceController.text = '';
-  //                     Navigator.of(context).pop();
-  //                   }
-  //                 },
-  //               )
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
-
-  // Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
-  //   if (documentSnapshot != null) {
-  //     _nameController.text = documentSnapshot['name'];
-  //     _priceController.text = documentSnapshot['price'].toString();
-  //   }
-  //   await showModalBottomSheet(
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (BuildContext ctx) {
-  //         return Padding(
-  //           padding: EdgeInsets.only(
-  //               top: 20,
-  //               left: 20,
-  //               right: 20,
-  //               bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               TextField(
-  //                 controller: _nameController,
-  //                 decoration: const InputDecoration(labelText: 'Name'),
-  //               ),
-  //               TextField(
-  //                 keyboardType:
-  //                     const TextInputType.numberWithOptions(decimal: true),
-  //                 controller: _priceController,
-  //                 decoration: const InputDecoration(
-  //                   labelText: 'Price',
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               ElevatedButton(
-  //                 child: const Text('Update'),
-  //                 onPressed: () async {
-  //                   final String name = _nameController.text;
-  //                   final double? price =
-  //                       double.tryParse(_priceController.text);
-  //                   if (price != null) {
-  //                     await _products
-  //                         .doc(documentSnapshot!.id)
-  //                         .update({"name": name, "price": price});
-  //                     _nameController.text = '';
-  //                     _priceController.text = '';
-  //                     Navigator.of(context).pop();
-  //                   }
-  //                 },
-  //               )
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
-
+ 
  String? validateTitle(String? input) {
     if (input == null || input.isEmpty) {
       return 'Title is required.';
@@ -157,20 +51,6 @@ class NoteController extends GetxController {
     return null;
   }
 
-  Future<void> delete(String productId) async {
-    await _products.doc(productId).delete();
-
-    Get.snackbar(
-      'successfully deleted', //Snackbar title
-      'You have successfully deleted a Note', // Snackbar message
-      icon: const Icon(Icons.delete, color: Colors.black),
-      backgroundColor: Colors_Constants.app_white_color,
-      colorText: Colors.black,
-      snackPosition: SnackPosition.TOP,
-      duration: const Duration(
-          seconds: 3), // Duration for which the Snackbar is shown
-    );
-  }
 
   // QuillEditorController controller = QuillEditorController();
 
