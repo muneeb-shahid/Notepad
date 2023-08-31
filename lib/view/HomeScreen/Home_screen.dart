@@ -9,6 +9,7 @@ import 'package:notepad/view/Note/Note.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
+import '../../controller/LoginController/LoginController.dart';
 import '../Checklist/Checklist.dart';
 import '../EditPost/EditPost.dart';
 import '../Folder/Folder.dart';
@@ -16,11 +17,15 @@ import '../Folder/Folder.dart';
 enum _menuValues { Note, Checklist, Folder }
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  HomePage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
+
+    LoginController loginController = Get.put(LoginController());
 
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;

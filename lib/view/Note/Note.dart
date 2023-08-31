@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,9 @@ class Note extends StatelessWidget {
     CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
+        User? user = FirebaseAuth.instance.currentUser;
+    String? userEmail = user?.email;
+
     return Scaffold(
         backgroundColor: Colors_Constants.app_background_color,
         appBar: AppBar(
@@ -103,149 +107,7 @@ class Note extends StatelessWidget {
               ),
             ))
 
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.vertical,
-        //   child: Column(
-        //     children: [
-        //       StreamBuilder<DocumentSnapshot>(
-        //         stream: FirebaseFirestore.instance
-        //             .collection('products')
-        //             .doc("name")
-        //             .snapshots(),
-        //         builder: (context, snapshot) {
-        //           if (snapshot.connectionState == ConnectionState.waiting) {
-        //             return CircularProgressIndicator();
-        //           }
-
-        //           if (snapshot.hasError) {
-        //             return Text('Error: ${snapshot.error}');
-        //           }
-
-        //           if (!snapshot.hasData) {
-        //             return Text('No data available');
-        //           }
-
-        //           var data = snapshot.data!.data();
-
-        //           return Column(
-        //             children: [
-        //               ToolBar(
-        //                 toolBarColor: _toolbarColor,
-        //                 padding: EdgeInsets.all(8),
-        //                 iconSize: 25,
-        //                 iconColor: _toolbarIconColor,
-        //                 activeIconColor: Colors.greenAccent.shade400,
-        //                 controller: noteController.controller,
-        //                 crossAxisAlignment: WrapCrossAlignment.start,
-        //                 direction: Axis.horizontal,
-        //               ),
-        //               LayoutBuilder(
-        //                 builder: (context, constraints) => Expanded(
-        //                   child: QuillHtmlEditor(
-        //                     text:
-        //                         "<h1>Hello</h1>This is a quill html editor example 😊",
-        //                     hintText: 'Hint text goes here',
-        //                     controller: noteController.controller,
-        //                     isEnabled: true,
-        //                     ensureVisible: false,
-        //                     minHeight: 100,
-        //                     autoFocus: false,
-        //                     textStyle: _editorTextStyle,
-        //                     hintTextStyle: _hintTextStyle,
-        //                     hintTextAlign: TextAlign.start,
-        //                     padding: const EdgeInsets.only(left: 10, top: 10),
-        //                     hintTextPadding:
-        //                         const EdgeInsets.only(left: 20, right: 20),
-        //                     backgroundColor: Colors.red,
-        //                     inputAction: InputAction.newline,
-        //                     onEditingComplete: (s) =>
-        //                         debugPrint('Editing completed $s'),
-        //                     loadingBuilder: (context) {
-        //                       return const Center(
-        //                           child: CircularProgressIndicator(
-        //                         strokeWidth: 1,
-        //                         color: Colors.green,
-        //                       ));
-        //                     },
-        //                     onFocusChanged: (bool focus) {
-        //                       noteController.hasFocus.value = focus;
-        //                     },
-        //                     onTextChanged: (text) =>
-        //                         debugPrint('widget text change $text'),
-        //                     onEditorCreated: () {
-        //                       debugPrint('Editor has been loaded');
-        //                       noteController.setHtmlText('Testing text on load');
-        //                     },
-        //                     onEditorResized: (height) =>
-        //                         debugPrint('Editor resized $height'),
-        //                     onSelectionChanged: (sel) => debugPrint(
-        //                         'index ${sel.index}, range ${sel.length}'),
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           );
-        //         },
-        //       ),
-
-        //       // ToolBar(
-        //       //   toolBarColor: _toolbarColor,
-        //       //   padding: EdgeInsets.all(8),
-        //       //   iconSize: 25,
-        //       //   iconColor: _toolbarIconColor,
-        //       //   activeIconColor: Colors.greenAccent.shade400,
-        //       //   controller: noteController.controller,
-        //       //   crossAxisAlignment: WrapCrossAlignment.start,
-        //       //   direction: Axis.horizontal,
-        //       // ),
-
-        //       // QuillHtmlEditor(
-        //       //     controller: noteController.controller, minHeight: 100),
-
-        //       // LayoutBuilder(
-        //       //   builder: (context, constraints) => Expanded(
-        //       //     child: QuillHtmlEditor(
-        //       //       text: "<h1>Hello</h1>This is a quill html editor example 😊",
-        //       //       hintText: 'Hint text goes here',
-        //       //       controller: noteController.controller,
-        //       //       isEnabled: true,
-        //       //       ensureVisible: false,
-        //       //       minHeight: 100,
-        //       //       autoFocus: false,
-        //       //       textStyle: _editorTextStyle,
-        //       //       hintTextStyle: _hintTextStyle,
-        //       //       hintTextAlign: TextAlign.start,
-        //       //       padding: const EdgeInsets.only(left: 10, top: 10),
-        //       //       hintTextPadding: const EdgeInsets.only(left: 20, right: 20),
-        //       //       backgroundColor: Colors.red,
-        //       //       inputAction: InputAction.newline,
-        //       //       onEditingComplete: (s) => debugPrint('Editing completed $s'),
-        //       //       loadingBuilder: (context) {
-        //       //         return const Center(
-        //       //             child: CircularProgressIndicator(
-        //       //           strokeWidth: 1,
-        //       //           color: Colors.green,
-        //       //         ));
-        //       //       },
-        //       //       onFocusChanged: (bool focus) {
-        //       //         noteController.hasFocus.value = focus;
-        //       //       },
-        //       //       onTextChanged: (text) =>
-        //       //           debugPrint('widget text change $text'),
-        //       //       onEditorCreated: () {
-        //       //         debugPrint('Editor has been loaded');
-        //       //         noteController.setHtmlText('Testing text on load');
-        //       //       },
-        //       //       onEditorResized: (height) =>
-        //       //           debugPrint('Editor resized $height'),
-        //       //       onSelectionChanged: (sel) =>
-        //       //           debugPrint('index ${sel.index}, range ${sel.length}'),
-        //       //     ),
-        //       //   ),
-        //       // ),
-        //     ],
-        //   ),
-        // ),
+    
 
         );
   }

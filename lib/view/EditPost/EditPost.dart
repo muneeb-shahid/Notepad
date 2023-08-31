@@ -20,7 +20,7 @@ class EditPost extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors_Constants.app_pink_color,
-          title: Text(Get.arguments["docId"].toString()),
+          // title: Text(Get.arguments["docId"].toString()),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors_Constants.app_pink_color,
@@ -32,47 +32,51 @@ class EditPost extends StatelessWidget {
         body: SafeArea(
             top: true,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      TextFormField(
-                        style: TextStyle(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        TextFormField(
+                          style: TextStyle(
+                              fontFamily:
+                                  Fonts_Size_Constants.heading_font_family,
+                              fontWeight: FontWeight.bold,
+                              color: Colors_Constants.app_black_color,
+                              fontSize:
+                                  Fonts_Size_Constants.heading_font_size.sp),
+                          controller: noteController.TitleController
+                            ..text = "${Get.arguments["title"].toString()}",
+                          decoration: const InputDecoration(
+                            hintText: 'Title',
+                          ),
+                          validator: noteController.validateTitle,
+                          focusNode: noteController.focusNode1,
+                          onFieldSubmitted: (value) {
+                            FocusScope.of(context)
+                                .requestFocus(noteController.focusNode2);
+                          },
+                        ),
+                        TextFormField(
+                          maxLines: 50,
+                          controller: noteController.ContentController
+                            ..text = "${Get.arguments["content"].toString()}",
+                          decoration: const InputDecoration(
+                            hintText: 'Content',
+                          ),
+                          style: TextStyle(
                             fontFamily:
-                                Fonts_Size_Constants.heading_font_family,
-                            fontWeight: FontWeight.bold,
+                                Fonts_Size_Constants.regular_font_family,
                             color: Colors_Constants.app_black_color,
-                            fontSize:
-                                Fonts_Size_Constants.heading_font_size.sp),
-                        controller: noteController.TitleController
-                          ..text = "${Get.arguments["title"].toString()}",
-                        decoration: const InputDecoration(
-                          hintText: 'Title',
+                          ),
+                          validator: noteController.validateContent,
+                          focusNode: noteController.focusNode2,
                         ),
-                        validator: noteController.validateTitle,
-                        focusNode: noteController.focusNode1,
-                        onFieldSubmitted: (value) {
-                          FocusScope.of(context)
-                              .requestFocus(noteController.focusNode2);
-                        },
-                      ),
-                      TextFormField(
-                        maxLines: 50,
-                        controller: noteController.ContentController
-                          ..text = "${Get.arguments["content"].toString()}",
-                        decoration: const InputDecoration(
-                          hintText: 'Content',
-                        ),
-                        style: TextStyle(
-                          fontFamily: Fonts_Size_Constants.regular_font_family,
-                          color: Colors_Constants.app_black_color,
-                        ),
-                        validator: noteController.validateContent,
-                        focusNode: noteController.focusNode2,
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             )));
   }

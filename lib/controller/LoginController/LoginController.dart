@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:notepad/constants/colors_constants/colors_constants.dart';
 import 'package:notepad/home.dart';
 
+import '../../view/HomeScreen/Home_screen.dart';
+
 class LoginController extends GetxController {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
@@ -35,7 +37,7 @@ class LoginController extends GetxController {
           password: login_password.text,
         );
         print('User Successfully login.');
-        Get.offAll(home());
+        Get.offAll(HomePage());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           print('No user found for that email.');

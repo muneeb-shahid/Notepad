@@ -7,6 +7,7 @@ import 'package:notepad/view/login/login.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../home.dart';
+import '../../view/HomeScreen/Home_screen.dart';
 
 MediaQueryData mediaQueryData = Get.mediaQuery;
 
@@ -68,7 +69,7 @@ class EmailVerificationController extends GetxController {
     _isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (isEmailVerified) {
-      Get.offAll(home());
+      Get.offAll(HomePage());
       timer?.cancel();
     }
   }
