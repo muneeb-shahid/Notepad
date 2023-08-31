@@ -20,7 +20,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NoteController noteController = Get.put(NoteController());
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
     var heightt = MediaQuery.of(context).size.height * 1;
@@ -181,6 +180,8 @@ class HomePage extends StatelessWidget {
                     final DocumentSnapshot documentSnapshot =
                         streamSnapshots.data!.docs[index];
 
+                    final docId = streamSnapshots.data!.docs[index].id;
+
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Card(
@@ -215,9 +216,13 @@ class HomePage extends StatelessWidget {
                                   child: Row(children: [
                                     IconButton(
                                         icon: const Icon(Icons.edit),
-                                        onPressed: () {
-                                          Get.to(
-                                          EditPost(editNote: documentSnapshot));
+                                        onPressed: () async {
+                                          Get.to(EditPost(), arguments: {
+                                            'title': documentSnapshot['title'],
+                                            'content':
+                                                documentSnapshot['content'],
+                                            "docId": docId
+                                          });
                                         }),
                                     IconButton(
                                         icon: const Icon(Icons.delete),
