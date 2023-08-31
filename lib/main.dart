@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:notepad/controller/MyAppController/MyAppController.dart';
 import 'package:notepad/view/HomeScreen/Home_screen.dart';
 import 'package:notepad/view/Note/Note.dart';
 import 'package:notepad/view/Start_Screen/Start_Screen.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Set the fit size (Find your UI design, look at the dimensions of the device screen and fill it in,unit in dp)
+    MyAppController appController = Get.put(MyAppController());
     return ScreenUtilInit(
       designSize: const Size(360, 790),
       minTextAdapt: true,
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           getPages: AppRoutes.appRoutes(),
-          // home: HomePage()
+          home: appController.user != null ? HomePage() :  Login(),
         );
       },
     );

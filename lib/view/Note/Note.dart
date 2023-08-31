@@ -30,35 +30,22 @@ class Note extends StatelessWidget {
     CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
-        User? user = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     String? userEmail = user?.email;
 
     return Scaffold(
         backgroundColor: Colors_Constants.app_background_color,
         appBar: AppBar(
           backgroundColor: Colors_Constants.app_pink_color,
-       
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors_Constants.app_pink_color,
           onPressed: () async {
-            if (noteController.formKey.currentState!.validate()) {
-              noteController.formKey.currentState!.save();
-
-              final String title = noteController.TitleController.text;
-              final String content = noteController.ContentController.text;
-              if (content != null) {
-                await _notes.add({"title": title, "content": content});
-
-                noteController.TitleController.text = '';
-                noteController.ContentController.text = '';
-                Get.back();
-              }
-            }
+            noteController.insertData();
+      
           },
           child: Icon(Icons.save),
         ),
-
         body: SafeArea(
             top: true,
             child: SingleChildScrollView(
@@ -105,11 +92,7 @@ class Note extends StatelessWidget {
                       )),
                 ],
               ),
-            ))
-
-    
-
-        );
+            )));
   }
 }
 

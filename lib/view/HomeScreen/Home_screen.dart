@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/controller/HomeScreenController/HomeScreenController.dart';
-import 'package:notepad/controller/NoteController/NoteController.dart';
 import 'package:notepad/view/Note/Note.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
@@ -24,12 +23,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
-
+    User? UserId = FirebaseAuth.instance.currentUser;
     LoginController loginController = Get.put(LoginController());
 
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
-    CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
+
+    final CollectionReference _notes =
+        FirebaseFirestore.instance.collection('notes');
+
+    Stream<QuerySnapshot> notesStream =
+        _notes.where("UserId", isEqualTo: UserId!.uid).snapshots();
+
 
     void showCustomDialog() {
       Get.defaultDialog(
@@ -59,6 +64,14 @@ class HomePage extends StatelessWidget {
                 fontSize: Fonts_Size_Constants.heading_font_size.sp),
           ),
           actions: [
+            IconButton(
+                icon: const Icon(
+                  Icons.logout_outlined,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  homeScreenController.signOut();
+                }),
             IconButton(
                 icon: const Icon(
                   Icons.search,
@@ -176,9 +189,24 @@ class HomePage extends StatelessWidget {
         body: SafeArea(
           top: true,
           child: StreamBuilder(
-            stream: _notes.snapshots(),
+            stream: notesStream,
             builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshots) {
-              if (streamSnapshots.hasData) {
+              if (streamSnapshots.connectionState == ConnectionState.waiting) {
+                return Center(
+                    child: CircularProgressIndicator(color: Colors.red));
+              } else if (streamSnapshots.hasError) {
+                return Center(
+                    child: Text(
+                  "Error fetching data",
+                  style: TextStyle(color: Colors.red, fontSize: 30),
+                ));
+              } else if (streamSnapshots.data!.docs.isEmpty) {
+                return Center(
+                    child: Text(
+                  "No data available",
+                  style: TextStyle(color: Colors.red, fontSize: 30),
+                ));
+              } else {
                 return ListView.builder(
                   itemCount: streamSnapshots.data!.docs.length,
                   itemBuilder: (context, index) {
@@ -240,15 +268,6 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                );
-              } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: CircularProgressIndicator(color: Colors.red),
-                    ),
-                  ],
                 );
               }
             },
