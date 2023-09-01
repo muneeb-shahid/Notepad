@@ -5,11 +5,15 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:notepad/constants/fonts_size_constant/fonts_size_constant.dart';
 import 'package:notepad/controller/SignUpController/SignUpController.dart';
+import 'package:notepad/view/Folder/Folder.dart';
 import 'package:notepad/view/login/login.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 
 class HomeScreenController extends GetxController {
+  final CollectionReference _folder =
+      FirebaseFirestore.instance.collection('folder');
+  String UserId = FirebaseAuth.instance.currentUser!.uid;
   SignUpController signUpController = Get.put(SignUpController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
@@ -57,7 +61,7 @@ class HomeScreenController extends GetxController {
 
   void showCustomDialog(context) {
     Get.defaultDialog(
-      title: "Make folder name",
+      title: "Make folder!",
       content: Column(
         children: [
           Form(
@@ -71,7 +75,7 @@ class HomeScreenController extends GetxController {
                     .requestFocus(signUpController.focusNode2);
               },
               style: TextStyle(color: Colors_Constants.app_black_color),
-              validator: signUpController.validateName,
+              validator: validateFolderName,
               decoration: InputDecoration(
                 hintText: 'Enter your folder name',
               ),
@@ -79,11 +83,9 @@ class HomeScreenController extends GetxController {
           )
         ],
       ),
-      // middleText: "This is the dialog's content.",
       titleStyle: TextStyle(
           color: Colors.black,
           fontSize: Fonts_Size_Constants.sub_heading_font_size.sp),
-      // middleTextStyle: TextStyle(color: Colors.black,fontSize: 30),
       actions: [
         TextButton(
           onPressed: () {
@@ -93,16 +95,30 @@ class HomeScreenController extends GetxController {
             "Close",
             style: TextStyle(
                 color: Colors.red,
-                fontSize: Fonts_Size_Constants.heading_font_size.sp),
+                fontSize: Fonts_Size_Constants.sub_heading_font_size.sp),
           ),
         ),
         TextButton(
-          onPressed: () {
-            _folderTextEditingController.clear();
-            Get.back();
+          onPressed: () async {
+            if (formKey.currentState!.validate()) {
+              formKey.currentState!.save();
+
+              final String folderName = _folderTextEditingController.text;
+              if (folderName != null) {
+                await _folder.add({"folderName": folderName, "UserId": UserId});
+                Get.to(() => Folder(), arguments: {
+                  'folderName': FolderTextEditingController.text,
+                });
+                FolderTextEditingController.text = '';
+
+                FolderTextEditingController.clear();
+              }
+            }
+
+            // Get.back();
           },
           child: Text(
-            "ok",
+            "save",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: Fonts_Size_Constants.heading_font_size.sp),
@@ -112,8 +128,12 @@ class HomeScreenController extends GetxController {
     );
   }
 
-  void showCustomTextFormField() {
-    TextFormField();
+  String? validateFolderName(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Folder name is required.';
+    }
+
+    return null;
   }
 
   @override

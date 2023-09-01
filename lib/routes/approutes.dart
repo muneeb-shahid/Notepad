@@ -45,10 +45,10 @@ class AppRoutes {
           page: () => Checklist(),
         ),
 
-//  GetPage(
-//           name: RoutesName.Folder,
-//           page: () => Folder(),
-//         ),
+ GetPage(
+          name: RoutesName.Folder,
+          page: () => Folder(),
+        ),
 
  GetPage(
           name: RoutesName.FullPageNote,

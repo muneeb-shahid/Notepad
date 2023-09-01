@@ -16,6 +16,8 @@ class NoteController extends GetxController {
 
   FocusNode _focusNode1 = FocusNode();
   get focusNode1 => _focusNode1;
+
+  
   FocusNode _focusNode2 = FocusNode();
   get focusNode2 => _focusNode2;
 

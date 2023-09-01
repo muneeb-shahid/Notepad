@@ -25,12 +25,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
-    User? UserId = FirebaseAuth.instance.currentUser;
     LoginController loginController = Get.put(LoginController());
 
     var heightt = MediaQuery.of(context).size.height * 1;
     var widthh = MediaQuery.of(context).size.width * 1;
 
+    User? UserId = FirebaseAuth.instance.currentUser;
     final CollectionReference _notes =
         FirebaseFirestore.instance.collection('notes');
 
@@ -158,7 +158,7 @@ class HomePage extends StatelessWidget {
                     Get.to(Checklist());
                     break;
                   case _menuValues.Folder:
-                    // Get.to(Folder());
+                    // Get.to(()=>Folder());
                     homeScreenController.showCustomDialog(context);
                     break;
                   default:
@@ -185,8 +185,8 @@ class HomePage extends StatelessWidget {
                 child: TextFormField(
                   controller: homeScreenController.SearchController,
                   focusNode: loginController.focusNode1,
-                  onChanged: (value) {
-                    homeScreenController.search.value = value;
+                  onChanged: (val) {
+                    homeScreenController.search.value = val.toString();
                   },
                   onFieldSubmitted: (value) {
                     FocusScope.of(context)
@@ -198,10 +198,9 @@ class HomePage extends StatelessWidget {
                     hintText: 'Search',
                     suffixIcon: IconButton(
                       onPressed: () {
-                        if (homeScreenController.SearchController.text !=
-                            null) {
-                          homeScreenController.SearchController.clear();
-                        }
+                        homeScreenController.SearchController.text != null
+                            ? homeScreenController.SearchController.clear()
+                            : null;
                       },
                       icon: Icon(
                         Icons.clear,
@@ -227,7 +226,8 @@ class HomePage extends StatelessWidget {
                         ConnectionState.waiting) {
                       return Center(
                           child: CircularProgressIndicator(color: Colors.red));
-                    } else if (streamSnapshots.hasError) {
+                    }
+                    if (streamSnapshots.hasError) {
                       return Center(
                           child: Text(
                         "Error fetching data",
@@ -248,6 +248,7 @@ class HomePage extends StatelessWidget {
 
                           final docId = streamSnapshots.data!.docs[index].id;
                           String position = documentSnapshot['title'];
+
                           if (homeScreenController
                               .SearchController.text.isEmpty) {
                             return ClipRRect(
@@ -288,6 +289,7 @@ class HomePage extends StatelessWidget {
                                                 .app_black_color,
                                           ),
                                         ),
+                                       
                                         trailing: SizedBox(
                                             width: 100,
                                             child: Row(children: [
@@ -313,6 +315,7 @@ class HomePage extends StatelessWidget {
                                                         documentSnapshot.id);
                                                   }),
                                             ]))),
+                                  
                                   ),
                                 ),
                               ),
@@ -391,77 +394,6 @@ class HomePage extends StatelessWidget {
                           } else {
                             return Container();
                           }
-                          // final DocumentSnapshot documentSnapshot =
-                          //     streamSnapshots.data!.docs[index];
-
-                          // final docId = streamSnapshots.data!.docs[index].id;
-
-                          // return ClipRRect(
-                          //   borderRadius: BorderRadius.circular(20),
-                          //   child: Card(
-                          //     color: Colors.red,
-                          //     child: Padding(
-                          //       padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
-                          //       child: GestureDetector(
-                          //         onTap: () {
-                          //           Get.to(() => FullPageNote(), arguments: {
-                          //             "title": documentSnapshot['title'],
-                          //             "content": documentSnapshot['content'],
-                          //           });
-                          //         },
-                          //         child: ListTile(
-                          //             title: Text(
-                          //               documentSnapshot['title'],
-                          //               overflow: TextOverflow.ellipsis,
-                          //               maxLines: 1,
-                          //               style: TextStyle(
-                          //                   fontFamily: Fonts_Size_Constants
-                          //                       .heading_font_family,
-                          //                   fontWeight: FontWeight.bold,
-                          //                   color: Colors_Constants
-                          //                       .app_black_color,
-                          //                   fontSize: Fonts_Size_Constants
-                          //                       .heading_font_size.sp),
-                          //             ),
-                          //             subtitle: Text(
-                          //               documentSnapshot['content'],
-                          //               overflow: TextOverflow.ellipsis,
-                          //               maxLines: 3,
-                          //               style: TextStyle(
-                          //                 fontFamily: Fonts_Size_Constants
-                          //                     .regular_font_family,
-                          //                 color:
-                          //                     Colors_Constants.app_black_color,
-                          //               ),
-                          //             ),
-                          //             trailing: SizedBox(
-                          //                 width: 100,
-                          //                 child: Row(children: [
-                          //                   IconButton(
-                          //                       icon: const Icon(Icons.edit),
-                          //                       onPressed: () async {
-                          //                         Get.to(EditPost(),
-                          //                             arguments: {
-                          //                               'title':
-                          //                                   documentSnapshot[
-                          //                                       'title'],
-                          //                               'content':
-                          //                                   documentSnapshot[
-                          //                                       'content'],
-                          //                               "docId": docId
-                          //                             });
-                          //                       }),
-                          //                   IconButton(
-                          //                       icon: const Icon(Icons.delete),
-                          //                       onPressed: () {
-                          //                         homeScreenController.delete(
-                          //                             documentSnapshot.id);
-                          //                       }),
-                          //                 ]))),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // );
                         },
                       );
                     }
@@ -472,4 +404,6 @@ class HomePage extends StatelessWidget {
           ),
         ));
   }
+
+
 }
