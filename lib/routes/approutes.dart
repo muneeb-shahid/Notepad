@@ -6,6 +6,7 @@ import '../customButtons/login_signup_button.dart';
 import '../view/Checklist/Checklist.dart';
 import '../view/EmailVerification/EmailVerification.dart';
 import '../view/Folder/Folder.dart';
+import '../view/FullPageNote/FullPageNote.dart';
 import '../view/HomeScreen/Home_screen.dart';
 import '../view/Note/Note.dart';
 import '../view/Start_Screen/Start_Screen.dart';
@@ -44,12 +45,15 @@ class AppRoutes {
           page: () => Checklist(),
         ),
 
+//  GetPage(
+//           name: RoutesName.Folder,
+//           page: () => Folder(),
+//         ),
+
  GetPage(
-          name: RoutesName.Folder,
-          page: () => Folder(),
+          name: RoutesName.FullPageNote,
+          page: () => FullPageNote(),
         ),
-
-
 
 
 

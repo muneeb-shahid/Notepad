@@ -7,6 +7,7 @@ class RoutesName {
   static String Note = "/Note";
   static String Checklist = "/Checklist";
   static String Folder = "/Folder";
+  static String FullPageNote = "/FullPageNote";
 
 
   

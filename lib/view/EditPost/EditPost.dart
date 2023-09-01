@@ -78,6 +78,8 @@ class EditPost extends StatelessWidget {
                   ],
                 ),
               ),
-            )));
+            ))
+            );
+  
   }
 }

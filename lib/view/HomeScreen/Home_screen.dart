@@ -12,6 +12,7 @@ import '../../controller/LoginController/LoginController.dart';
 import '../Checklist/Checklist.dart';
 import '../EditPost/EditPost.dart';
 import '../Folder/Folder.dart';
+import '../FullPageNote/FullPageNote.dart';
 
 enum _menuValues { Note, Checklist, Folder }
 
@@ -34,23 +35,6 @@ class HomePage extends StatelessWidget {
 
     Stream<QuerySnapshot> notesStream =
         _notes.where("UserId", isEqualTo: UserId!.uid).snapshots();
-
-
-    void showCustomDialog() {
-      Get.defaultDialog(
-        title: "Dialog Title",
-        middleText: "This is the dialog's content.",
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              // Close the dialog
-              Get.back();
-            },
-            child: Text("Close"),
-          ),
-        ],
-      );
-    }
 
     return Scaffold(
         backgroundColor: Colors_Constants.app_background_color,
@@ -169,7 +153,8 @@ class HomePage extends StatelessWidget {
                     Get.to(Checklist());
                     break;
                   case _menuValues.Folder:
-                    Get.to(Folder());
+                    // Get.to(Folder());
+                    homeScreenController.showCustomDialog(context);
                     break;
                   default:
                 }
@@ -181,7 +166,7 @@ class HomePage extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               // Call the showCustomDialog function to show the dialog
-              showCustomDialog();
+              homeScreenController.showCustomDialog(context);
             },
             child: Text("Show Dialog"),
           ),
@@ -221,49 +206,58 @@ class HomePage extends StatelessWidget {
                         color: Colors.red,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
-                          child: ListTile(
-                              title: Text(
-                                documentSnapshot['title'],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontFamily: Fonts_Size_Constants
-                                        .heading_font_family,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors_Constants.app_black_color,
-                                    fontSize: Fonts_Size_Constants
-                                        .heading_font_size.sp),
-                              ),
-                              subtitle: Text(
-                                documentSnapshot['content'],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  fontFamily:
-                                      Fonts_Size_Constants.regular_font_family,
-                                  color: Colors_Constants.app_black_color,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => FullPageNote(), arguments: {
+                                "title": documentSnapshot['title'],
+                                "content": documentSnapshot['content'],
+                              });
+                            },
+                            child: ListTile(
+                                title: Text(
+                                  documentSnapshot['title'],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontFamily: Fonts_Size_Constants
+                                          .heading_font_family,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors_Constants.app_black_color,
+                                      fontSize: Fonts_Size_Constants
+                                          .heading_font_size.sp),
                                 ),
-                              ),
-                              trailing: SizedBox(
-                                  width: 100,
-                                  child: Row(children: [
-                                    IconButton(
-                                        icon: const Icon(Icons.edit),
-                                        onPressed: () async {
-                                          Get.to(EditPost(), arguments: {
-                                            'title': documentSnapshot['title'],
-                                            'content':
-                                                documentSnapshot['content'],
-                                            "docId": docId
-                                          });
-                                        }),
-                                    IconButton(
-                                        icon: const Icon(Icons.delete),
-                                        onPressed: () {
-                                          homeScreenController
-                                              .delete(documentSnapshot.id);
-                                        }),
-                                  ]))),
+                                subtitle: Text(
+                                  documentSnapshot['content'],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontFamily: Fonts_Size_Constants
+                                        .regular_font_family,
+                                    color: Colors_Constants.app_black_color,
+                                  ),
+                                ),
+                                trailing: SizedBox(
+                                    width: 100,
+                                    child: Row(children: [
+                                      IconButton(
+                                          icon: const Icon(Icons.edit),
+                                          onPressed: () async {
+                                            Get.to(EditPost(), arguments: {
+                                              'title':
+                                                  documentSnapshot['title'],
+                                              'content':
+                                                  documentSnapshot['content'],
+                                              "docId": docId
+                                            });
+                                          }),
+                                      IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () {
+                                            homeScreenController
+                                                .delete(documentSnapshot.id);
+                                          }),
+                                    ]))),
+                          ),
                         ),
                       ),
                     );

@@ -27,11 +27,6 @@ class Note extends StatelessWidget {
     // final _hintTextStyle = const TextStyle(
     //     fontSize: 18, color: Colors.black12, fontWeight: FontWeight.normal);
     NoteController noteController = Get.put(NoteController());
-    CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
-    var heightt = MediaQuery.of(context).size.height * 1;
-    var widthh = MediaQuery.of(context).size.width * 1;
-    User? user = FirebaseAuth.instance.currentUser;
-    String? userEmail = user?.email;
 
     return Scaffold(
         backgroundColor: Colors_Constants.app_background_color,
