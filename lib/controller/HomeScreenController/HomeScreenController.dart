@@ -14,6 +14,10 @@ class HomeScreenController extends GetxController {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
 
+  TextEditingController _searchController = TextEditingController();
+  RxString search = ''.obs;
+
+  get SearchController => _searchController;
   final TextEditingController _folderTextEditingController =
       TextEditingController();
   get FolderTextEditingController => _folderTextEditingController;
@@ -106,6 +110,10 @@ class HomeScreenController extends GetxController {
         ),
       ],
     );
+  }
+
+  void showCustomTextFormField() {
+    TextFormField();
   }
 
   @override

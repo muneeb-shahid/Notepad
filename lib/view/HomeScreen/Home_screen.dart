@@ -9,6 +9,7 @@ import 'package:notepad/view/Note/Note.dart';
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
 import '../../controller/LoginController/LoginController.dart';
+import '../../controller/SearchDelegate/searchDelegate.dart';
 import '../Checklist/Checklist.dart';
 import '../EditPost/EditPost.dart';
 import '../Folder/Folder.dart';
@@ -61,7 +62,11 @@ class HomePage extends StatelessWidget {
                   Icons.search,
                   color: Colors.white,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(context: context, delegate: Search());
+                  // homeScreenController.showCustomTextFormField();
+                  // TextFormField();
+                }),
             PopupMenuButton<_menuValues>(
               offset: Offset(0, heightt * 0.08),
               shape: RoundedRectangleBorder(
@@ -173,98 +178,288 @@ class HomePage extends StatelessWidget {
         ),
         body: SafeArea(
           top: true,
-          child: StreamBuilder(
-            stream: notesStream,
-            builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshots) {
-              if (streamSnapshots.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: CircularProgressIndicator(color: Colors.red));
-              } else if (streamSnapshots.hasError) {
-                return Center(
-                    child: Text(
-                  "Error fetching data",
-                  style: TextStyle(color: Colors.red, fontSize: 30),
-                ));
-              } else if (streamSnapshots.data!.docs.isEmpty) {
-                return Center(
-                    child: Text(
-                  "No data available",
-                  style: TextStyle(color: Colors.red, fontSize: 30),
-                ));
-              } else {
-                return ListView.builder(
-                  itemCount: streamSnapshots.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    final DocumentSnapshot documentSnapshot =
-                        streamSnapshots.data!.docs[index];
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: TextFormField(
+                  controller: homeScreenController.SearchController,
+                  focusNode: loginController.focusNode1,
+                  onChanged: (value) {
+                    homeScreenController.search.value = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    FocusScope.of(context)
+                        .requestFocus(loginController.focusNode2);
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(color: Colors_Constants.app_black_color),
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(width: 2, color: Colors.white)),
+                    prefixIcon: Icon(Icons.search, color: Colors.black),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: StreamBuilder(
+                  stream: notesStream,
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshots) {
+                    if (streamSnapshots.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(
+                          child: CircularProgressIndicator(color: Colors.red));
+                    } else if (streamSnapshots.hasError) {
+                      return Center(
+                          child: Text(
+                        "Error fetching data",
+                        style: TextStyle(color: Colors.red, fontSize: 30),
+                      ));
+                    } else if (streamSnapshots.data!.docs.isEmpty) {
+                      return Center(
+                          child: Text(
+                        "No data available",
+                        style: TextStyle(color: Colors.red, fontSize: 30),
+                      ));
+                    } else {
+                      return ListView.builder(
+                        itemCount: streamSnapshots.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshots.data!.docs[index];
 
-                    final docId = streamSnapshots.data!.docs[index].id;
+                          final docId = streamSnapshots.data!.docs[index].id;
+                          String position = documentSnapshot['title'];
+                          if (homeScreenController
+                              .SearchController.text.isEmpty) {
 
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Card(
-                        color: Colors.red,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => FullPageNote(), arguments: {
-                                "title": documentSnapshot['title'],
-                                "content": documentSnapshot['content'],
-                              });
-                            },
-                            child: ListTile(
-                                title: Text(
-                                  documentSnapshot['title'],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontFamily: Fonts_Size_Constants
-                                          .heading_font_family,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors_Constants.app_black_color,
-                                      fontSize: Fonts_Size_Constants
-                                          .heading_font_size.sp),
-                                ),
-                                subtitle: Text(
-                                  documentSnapshot['content'],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    fontFamily: Fonts_Size_Constants
-                                        .regular_font_family,
-                                    color: Colors_Constants.app_black_color,
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Card(
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => FullPageNote(), arguments: {
+                                        "title": documentSnapshot['title'],
+                                        "content": documentSnapshot['content'],
+                                      });
+                                    },
+                                    child: ListTile(
+                                        title: Text(
+                                          documentSnapshot['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontFamily: Fonts_Size_Constants
+                                                  .heading_font_family,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors_Constants
+                                                  .app_black_color,
+                                              fontSize: Fonts_Size_Constants
+                                                  .heading_font_size.sp),
+                                        ),
+                                        subtitle: Text(
+                                          documentSnapshot['content'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                            fontFamily: Fonts_Size_Constants
+                                                .regular_font_family,
+                                            color: Colors_Constants
+                                                .app_black_color,
+                                          ),
+                                        ),
+                                        trailing: SizedBox(
+                                            width: 100,
+                                            child: Row(children: [
+                                              IconButton(
+                                                  icon: const Icon(Icons.edit),
+                                                  onPressed: () async {
+                                                    Get.to(EditPost(),
+                                                        arguments: {
+                                                          'title':
+                                                              documentSnapshot[
+                                                                  'title'],
+                                                          'content':
+                                                              documentSnapshot[
+                                                                  'content'],
+                                                          "docId": docId
+                                                        });
+                                                  }),
+                                              IconButton(
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    homeScreenController.delete(
+                                                        documentSnapshot.id);
+                                                  }),
+                                            ]))),
                                   ),
                                 ),
-                                trailing: SizedBox(
-                                    width: 100,
-                                    child: Row(children: [
-                                      IconButton(
-                                          icon: const Icon(Icons.edit),
-                                          onPressed: () async {
-                                            Get.to(EditPost(), arguments: {
-                                              'title':
-                                                  documentSnapshot['title'],
-                                              'content':
-                                                  documentSnapshot['content'],
-                                              "docId": docId
-                                            });
-                                          }),
-                                      IconButton(
-                                          icon: const Icon(Icons.delete),
-                                          onPressed: () {
-                                            homeScreenController
-                                                .delete(documentSnapshot.id);
-                                          }),
-                                    ]))),
-                          ),
-                        ),
-                      ),
-                    );
+                              ),
+                            );
+                        
+                          } else if (position.toLowerCase().contains(homeScreenController.SearchController.text.toString().toLowerCase())) {
+
+                            
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Card(
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => FullPageNote(), arguments: {
+                                        "title": documentSnapshot['title'],
+                                        "content": documentSnapshot['content'],
+                                      });
+                                    },
+                                    child: ListTile(
+                                        title: Text(
+                                          documentSnapshot['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontFamily: Fonts_Size_Constants
+                                                  .heading_font_family,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors_Constants
+                                                  .app_black_color,
+                                              fontSize: Fonts_Size_Constants
+                                                  .heading_font_size.sp),
+                                        ),
+                                        subtitle: Text(
+                                          documentSnapshot['content'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                            fontFamily: Fonts_Size_Constants
+                                                .regular_font_family,
+                                            color: Colors_Constants
+                                                .app_black_color,
+                                          ),
+                                        ),
+                                        trailing: SizedBox(
+                                            width: 100,
+                                            child: Row(children: [
+                                              IconButton(
+                                                  icon: const Icon(Icons.edit),
+                                                  onPressed: () async {
+                                                    Get.to(EditPost(),
+                                                        arguments: {
+                                                          'title':
+                                                              documentSnapshot[
+                                                                  'title'],
+                                                          'content':
+                                                              documentSnapshot[
+                                                                  'content'],
+                                                          "docId": docId
+                                                        });
+                                                  }),
+                                              IconButton(
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    homeScreenController.delete(
+                                                        documentSnapshot.id);
+                                                  }),
+                                            ]))),
+                                  ),
+                                ),
+                              ),
+                            );
+                        
+                          } else {
+                            return Container();
+                          }
+                          return Container();
+                          // final DocumentSnapshot documentSnapshot =
+                          //     streamSnapshots.data!.docs[index];
+
+                          // final docId = streamSnapshots.data!.docs[index].id;
+
+                          // return ClipRRect(
+                          //   borderRadius: BorderRadius.circular(20),
+                          //   child: Card(
+                          //     color: Colors.red,
+                          //     child: Padding(
+                          //       padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
+                          //       child: GestureDetector(
+                          //         onTap: () {
+                          //           Get.to(() => FullPageNote(), arguments: {
+                          //             "title": documentSnapshot['title'],
+                          //             "content": documentSnapshot['content'],
+                          //           });
+                          //         },
+                          //         child: ListTile(
+                          //             title: Text(
+                          //               documentSnapshot['title'],
+                          //               overflow: TextOverflow.ellipsis,
+                          //               maxLines: 1,
+                          //               style: TextStyle(
+                          //                   fontFamily: Fonts_Size_Constants
+                          //                       .heading_font_family,
+                          //                   fontWeight: FontWeight.bold,
+                          //                   color: Colors_Constants
+                          //                       .app_black_color,
+                          //                   fontSize: Fonts_Size_Constants
+                          //                       .heading_font_size.sp),
+                          //             ),
+                          //             subtitle: Text(
+                          //               documentSnapshot['content'],
+                          //               overflow: TextOverflow.ellipsis,
+                          //               maxLines: 3,
+                          //               style: TextStyle(
+                          //                 fontFamily: Fonts_Size_Constants
+                          //                     .regular_font_family,
+                          //                 color:
+                          //                     Colors_Constants.app_black_color,
+                          //               ),
+                          //             ),
+                          //             trailing: SizedBox(
+                          //                 width: 100,
+                          //                 child: Row(children: [
+                          //                   IconButton(
+                          //                       icon: const Icon(Icons.edit),
+                          //                       onPressed: () async {
+                          //                         Get.to(EditPost(),
+                          //                             arguments: {
+                          //                               'title':
+                          //                                   documentSnapshot[
+                          //                                       'title'],
+                          //                               'content':
+                          //                                   documentSnapshot[
+                          //                                       'content'],
+                          //                               "docId": docId
+                          //                             });
+                          //                       }),
+                          //                   IconButton(
+                          //                       icon: const Icon(Icons.delete),
+                          //                       onPressed: () {
+                          //                         homeScreenController.delete(
+                          //                             documentSnapshot.id);
+                          //                       }),
+                          //                 ]))),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                      );
+                    }
                   },
-                );
-              }
-            },
+                ),
+              ),
+            ],
           ),
         ));
   }
