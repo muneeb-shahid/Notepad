@@ -196,6 +196,18 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(color: Colors_Constants.app_black_color),
                   decoration: InputDecoration(
                     hintText: 'Search',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        if (homeScreenController.SearchController.text !=
+                            null) {
+                          homeScreenController.SearchController.clear();
+                        }
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.black,
+                      ),
+                    ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -238,7 +250,6 @@ class HomePage extends StatelessWidget {
                           String position = documentSnapshot['title'];
                           if (homeScreenController
                               .SearchController.text.isEmpty) {
-
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Card(
@@ -306,10 +317,10 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             );
-                        
-                          } else if (position.toLowerCase().contains(homeScreenController.SearchController.text.toString().toLowerCase())) {
-
-                            
+                          } else if (position.toLowerCase().contains(
+                              homeScreenController.SearchController.text
+                                  .toString()
+                                  .toLowerCase())) {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Card(
@@ -333,7 +344,7 @@ class HomePage extends StatelessWidget {
                                                   .heading_font_family,
                                               fontWeight: FontWeight.bold,
                                               color: Colors_Constants
-                                                  .app_black_color,
+                                                  .app_blue_color,
                                               fontSize: Fonts_Size_Constants
                                                   .heading_font_size.sp),
                                         ),
@@ -377,11 +388,9 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             );
-                        
                           } else {
                             return Container();
                           }
-                          return Container();
                           // final DocumentSnapshot documentSnapshot =
                           //     streamSnapshots.data!.docs[index];
 
