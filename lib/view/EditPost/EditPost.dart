@@ -70,7 +70,6 @@ class EditPost extends StatelessWidget {
                                 Fonts_Size_Constants.regular_font_family,
                             color: Colors_Constants.app_black_color,
                           ),
-                          validator: noteController.validateContent,
                           focusNode: noteController.focusNode2,
                         ),
                       ],

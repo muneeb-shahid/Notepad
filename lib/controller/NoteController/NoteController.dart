@@ -43,13 +43,7 @@ class NoteController extends GetxController {
     return null;
   }
 
-  String? validateContent(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Content is required.';
-    }
 
-    return null;
-  }
 
   String UserId = FirebaseAuth.instance.currentUser!.uid;
   insertData() async {
@@ -58,7 +52,6 @@ class NoteController extends GetxController {
 
       final String title = _titleController.text;
       final String content = _contentController.text;
-      // final UserId = _UserIdController.text;
 
       if (content != null) {
         await _notes

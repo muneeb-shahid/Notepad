@@ -59,6 +59,14 @@ class HomeScreenController extends GetxController {
     );
   }
 
+  String? validateFolderName(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Folder name is required.';
+    }
+
+    return null;
+  }
+
   void showCustomDialog(context) {
     Get.defaultDialog(
       title: "Make folder!",
@@ -89,6 +97,7 @@ class HomeScreenController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
+            FolderTextEditingController.clear();
             Get.back();
           },
           child: Text(
@@ -106,16 +115,13 @@ class HomeScreenController extends GetxController {
               final String folderName = _folderTextEditingController.text;
               if (folderName != null) {
                 await _folder.add({"folderName": folderName, "UserId": UserId});
-                Get.to(() => Folder(), arguments: {
-                  'folderName': FolderTextEditingController.text,
-                });
+
                 FolderTextEditingController.text = '';
 
                 FolderTextEditingController.clear();
+                Get.back();
               }
             }
-
-            // Get.back();
           },
           child: Text(
             "save",
@@ -128,18 +134,12 @@ class HomeScreenController extends GetxController {
     );
   }
 
-  String? validateFolderName(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Folder name is required.';
-    }
-
-    return null;
-  }
-
   @override
   void dispose() {
-    _folderTextEditingController.dispose();
-
+    FolderTextEditingController.dispose();
+    SearchController.dispose();
+    TitleController.dispose();
+    ContentController.dispose();
     super.dispose();
   }
 }

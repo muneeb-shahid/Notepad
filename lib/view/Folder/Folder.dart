@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +25,13 @@ class Folder extends StatelessWidget {
   Widget build(BuildContext context) {
     FolderController folderController = Get.put(FolderController());
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
-    User? UserId = FirebaseAuth.instance.currentUser;
     LoginController loginController = Get.put(LoginController());
 
     var heightt = MediaQuery.of(context).size.height * 1;
 
+    var widthh = MediaQuery.of(context).size.width * 1;
+
+    User? UserId = FirebaseAuth.instance.currentUser;
     final CollectionReference _folder =
         FirebaseFirestore.instance.collection('folder');
 
@@ -47,7 +51,7 @@ class Folder extends StatelessWidget {
                 color: Colors.white,
               )),
           title: Text(
-            "${Get.arguments['folderName']}",
+            "Folder",
             style: TextStyle(
                 fontFamily: Fonts_Size_Constants.Philosopher,
                 fontWeight: FontWeight.bold,
@@ -140,7 +144,7 @@ class Folder extends StatelessWidget {
                         color: Colors.black,
                       ),
                       Text(
-                        "Folder",
+                        "Make folder",
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -163,8 +167,7 @@ class Folder extends StatelessWidget {
                     Get.to(Checklist());
                     break;
                   case _menuValues.Folder:
-                    Get.to(() => Folder());
-                    // homeScreenController.showCustomDialog(context);
+                    homeScreenController.showCustomDialog(context);
                     break;
                   default:
                 }
@@ -250,42 +253,36 @@ class Folder extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final DocumentSnapshot documentSnapshot =
                           streamSnapshots.data!.docs[index];
-
                       final docId = streamSnapshots.data!.docs[index].id;
 
                       // Debugging: Print document data.
                       print("Document data: ${documentSnapshot.data()}");
 
                       if (documentSnapshot.exists) {
-                        // Adjust this part based on your document structure.
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Card(
                             child: ListTile(
+                                leading: Icon(Icons.folder),
                                 title: Text(
-                                  "${documentSnapshot['folderName']}",
+
+                                  documentSnapshot['folderName'].toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: Fonts_Size_Constants
                                           .heading_font_family,
                                       fontWeight: FontWeight.bold,
                                       color: Colors_Constants.app_black_color,
                                       fontSize: Fonts_Size_Constants
-                                          .heading_font_size.sp),
+                                          .sub_heading_font_size.sp),
                                 ),
                                 trailing: SizedBox(
-                                    width: 100,
+                                    width: widthh * 0.3.sp,
                                     child: Row(children: [
                                       IconButton(
                                           icon: const Icon(Icons.edit),
                                           onPressed: () async {
-                                            folderController
-                                                .showCustomDialog(context);
-                                            // Get.to(EditPost(), arguments: {
-                                            //   'folderName':
-                                            //       documentSnapshot['folderName'],
-
-                                            //   "docId": docId
-                                            // });
+                                            folderController.updateFolderName(
+                                                documentSnapshot.id);
                                           }),
                                       IconButton(
                                           icon: const Icon(Icons.delete),

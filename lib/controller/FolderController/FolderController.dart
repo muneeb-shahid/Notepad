@@ -7,13 +7,11 @@ import 'package:notepad/controller/SignUpController/SignUpController.dart';
 
 import '../../constants/colors_constants/colors_constants.dart';
 import '../../constants/fonts_size_constant/fonts_size_constant.dart';
-import '../../view/Folder/Folder.dart';
 import '../HomeScreenController/HomeScreenController.dart';
 
 class FolderController extends GetxController {
-  SignUpController signUpController = Get.put(SignUpController());
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
-  User? UserId = FirebaseAuth.instance.currentUser;
+  SignUpController signUpController = Get.put(SignUpController());
 
   final CollectionReference _folder =
       FirebaseFirestore.instance.collection('folder');
@@ -23,7 +21,7 @@ class FolderController extends GetxController {
 
     Get.snackbar(
       'successfully deleted', //Snackbar title
-      'You have successfully deleted a Note', // Snackbar message
+      'You have successfully deleted a folder', // Snackbar message
       icon: const Icon(Icons.delete, color: Colors.black),
       backgroundColor: Colors_Constants.app_white_color,
       colorText: Colors.black,
@@ -33,26 +31,20 @@ class FolderController extends GetxController {
     );
   }
 
-  void showCustomDialog(context) {
+  updateFolderName(String productId) async {
     Get.defaultDialog(
-      title: "Update folder Name!",
+      title: "Update folder name",
       content: Column(
         children: [
           Form(
             key: homeScreenController.formKey,
             child: TextFormField(
-              controller: homeScreenController.FolderTextEditingController
-                ..text = "${Get.arguments['folderName']}",
+              controller: homeScreenController.FolderTextEditingController,
               keyboardType: TextInputType.name,
-              focusNode: signUpController.focusNode1,
-              onFieldSubmitted: (value) {
-                FocusScope.of(context)
-                    .requestFocus(signUpController.focusNode2);
-              },
               style: TextStyle(color: Colors_Constants.app_black_color),
               validator: homeScreenController.validateFolderName,
               decoration: InputDecoration(
-                hintText: 'Folder name',
+                hintText: 'Enter your folder name',
               ),
             ),
           )
@@ -64,6 +56,7 @@ class FolderController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
+             homeScreenController.FolderTextEditingController.clear();
             Get.back();
           },
           child: Text(
@@ -75,27 +68,28 @@ class FolderController extends GetxController {
         ),
         TextButton(
           onPressed: () async {
-            if (homeScreenController.formKey.currentState!.validate()) {
-              homeScreenController.formKey.currentState!.save();
-
-              final String folderName =
-                  homeScreenController.FolderTextEditingController.text;
-              if (folderName != null) {
-                updateFolderName();
-                // Get.to(() => Folder(), arguments: {
-                //   'folderName':
-                //       homeScreenController.FolderTextEditingController.text,
-                // });
-                homeScreenController.FolderTextEditingController.text = '';
-
-                // homeScreenController.FolderTextEditingController.clear();
-              }
-            }
-
-            // Get.back();
+            await _folder.doc(productId).update(
+              {
+                'folderName':
+                    homeScreenController.FolderTextEditingController.text,
+              },
+            ).then((value) {
+              homeScreenController.FolderTextEditingController.clear();
+              Get.back();
+              Get.snackbar(
+                'Update Successfully ', //Snackbar title
+                'You successfully updated a folder', // Snackbar message
+                icon: const Icon(Icons.update_rounded, color: Colors.black),
+                backgroundColor: Colors_Constants.app_white_color,
+                colorText: Colors.black,
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(
+                    seconds: 3), // Duration for which the Snackbar is shown
+              );
+            });
           },
           child: Text(
-            "update",
+            "Update",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: Fonts_Size_Constants.heading_font_size.sp),
@@ -103,28 +97,5 @@ class FolderController extends GetxController {
         ),
       ],
     );
-  }
-
-  updateFolderName() async {
-    await FirebaseFirestore.instance
-        .collection('folderName')
-        .doc(Get.arguments["folderName"].toString())
-        .update(
-      {
-        'folderName': homeScreenController.FolderTextEditingController.text,
-      },
-    ).then((value) {
-      Get.back();
-      Get.snackbar(
-        'Update Successfully ', //Snackbar title
-        'You successfully updated a Note', // Snackbar message
-        icon: const Icon(Icons.update_rounded, color: Colors.black),
-        backgroundColor: Colors_Constants.app_white_color,
-        colorText: Colors.black,
-        snackPosition: SnackPosition.TOP,
-        duration: const Duration(
-            seconds: 3), // Duration for which the Snackbar is shown
-      );
-    });
   }
 }

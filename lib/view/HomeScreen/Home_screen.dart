@@ -158,8 +158,8 @@ class HomePage extends StatelessWidget {
                     Get.to(Checklist());
                     break;
                   case _menuValues.Folder:
-                    // Get.to(()=>Folder());
-                    homeScreenController.showCustomDialog(context);
+                    Get.to(Folder());
+                    // homeScreenController.showCustomDialog(context);
                     break;
                   default:
                 }
@@ -171,7 +171,7 @@ class HomePage extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               // Call the showCustomDialog function to show the dialog
-              homeScreenController.showCustomDialog(context);
+              // homeScreenController.showCustomDialog(context);
             },
             child: Text("Show Dialog"),
           ),
@@ -213,7 +213,7 @@ class HomePage extends StatelessWidget {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(width: 2, color: Colors.white)),
-                    prefixIcon: Icon(Icons.search, color: Colors.black),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black),
                   ),
                 ),
               ),
