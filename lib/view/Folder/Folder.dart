@@ -15,6 +15,7 @@ import '../../controller/FolderController/FolderController.dart';
 import '../../controller/LoginController/LoginController.dart';
 import '../../controller/SearchDelegate/searchDelegate.dart';
 import '../Checklist/Checklist.dart';
+import '../Folder_subNotes/folder_subNotes.dart';
 
 enum _menuValues { Note, Checklist, Folder }
 
@@ -73,8 +74,6 @@ class Folder extends StatelessWidget {
                 ),
                 onPressed: () {
                   showSearch(context: context, delegate: Search());
-                  // homeScreenController.showCustomTextFormField();
-                  // TextFormField();
                 }),
             PopupMenuButton<_menuValues>(
               offset: Offset(0, heightt * 0.08),
@@ -175,6 +174,7 @@ class Folder extends StatelessWidget {
             ),
           ],
         ),
+     
         body: SafeArea(
           top: true,
           child: Column(
@@ -191,7 +191,7 @@ class Folder extends StatelessWidget {
                     FocusScope.of(context)
                         .requestFocus(loginController.focusNode2);
                   },
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(color: Colors_Constants.app_black_color),
                   decoration: InputDecoration(
                     hintText: 'Search',
@@ -254,54 +254,121 @@ class Folder extends StatelessWidget {
                       final DocumentSnapshot documentSnapshot =
                           streamSnapshots.data!.docs[index];
                       final docId = streamSnapshots.data!.docs[index].id;
+                      String position = documentSnapshot['folderName'];
+                      bool doesNotContain = !position.toUpperCase().contains(
+                          homeScreenController.SearchController.text
+                              .toString()
+                              .toUpperCase());
 
                       // Debugging: Print document data.
                       print("Document data: ${documentSnapshot.data()}");
-
-                      if (documentSnapshot.exists) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Card(
-                            child: ListTile(
-                                leading: Icon(Icons.folder),
-                                title: Text(
-
-                                  documentSnapshot['folderName'].toUpperCase(),
-                                  style: TextStyle(
-                                      fontFamily: Fonts_Size_Constants
-                                          .heading_font_family,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors_Constants.app_black_color,
-                                      fontSize: Fonts_Size_Constants
-                                          .sub_heading_font_size.sp),
-                                ),
-                                trailing: SizedBox(
-                                    width: widthh * 0.3.sp,
-                                    child: Row(children: [
-                                      IconButton(
-                                          icon: const Icon(Icons.edit),
-                                          onPressed: () async {
-                                            folderController.updateFolderName(
-                                                documentSnapshot.id);
-                                          }),
-                                      IconButton(
-                                          icon: const Icon(Icons.delete),
-                                          onPressed: () {
-                                            folderController
-                                                .delete(documentSnapshot.id);
-                                          }),
-                                    ]))),
+                      if (homeScreenController.SearchController.text.isEmpty) {
+                        if (documentSnapshot.exists) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => Folder_Sub_Notes(), arguments: {
+                                'folderName': documentSnapshot['folderName'],
+                              });
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Card(
+                                child: ListTile(
+                                    leading: Icon(Icons.folder),
+                                    title: Text(
+                                      documentSnapshot['folderName'],
+                                      style: TextStyle(
+                                          fontFamily: Fonts_Size_Constants
+                                              .heading_font_family,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Colors_Constants.app_black_color,
+                                          fontSize: Fonts_Size_Constants
+                                              .sub_heading_font_size.sp),
+                                    ),
+                                    trailing: SizedBox(
+                                        width: widthh * 0.3.sp,
+                                        child: Row(children: [
+                                          IconButton(
+                                              icon: const Icon(Icons.edit),
+                                              onPressed: () async {
+                                                folderController
+                                                    .updateFolderName(
+                                                        documentSnapshot.id);
+                                              }),
+                                          IconButton(
+                                              icon: const Icon(Icons.delete),
+                                              onPressed: () {
+                                                folderController.delete(
+                                                    documentSnapshot.id);
+                                              }),
+                                        ]))),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container(); // Handle non-existing document.
+                        }
+                      } else if (position.toUpperCase().contains(
+                          homeScreenController.SearchController.text
+                              .toString())) {
+                        if (documentSnapshot.exists) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Card(
+                              child: ListTile(
+                                  leading: Icon(Icons.folder),
+                                  title: Text(
+                                    documentSnapshot['folderName']
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        fontFamily: Fonts_Size_Constants
+                                            .heading_font_family,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors_Constants.app_blue_color,
+                                        fontSize: Fonts_Size_Constants
+                                            .sub_heading_font_size.sp),
+                                  ),
+                                  trailing: SizedBox(
+                                      width: widthh * 0.3.sp,
+                                      child: Row(children: [
+                                        IconButton(
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () async {
+                                              folderController.updateFolderName(
+                                                  documentSnapshot.id);
+                                            }),
+                                        IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              folderController
+                                                  .delete(documentSnapshot.id);
+                                            }),
+                                      ]))),
+                            ),
+                          );
+                        } else {
+                          return Container(); // Handle non-existing document.
+                        }
+                      } else if (doesNotContain) {
+                        return Center(
+                          child: Text(
+                            "Not found",
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize:
+                                    Fonts_Size_Constants.heading_font_size.sp),
                           ),
                         );
-                      } else {
-                        return Container(); // Handle non-existing document.
                       }
                     },
                   );
+                
                 },
               )),
             ],
           ),
         ));
+  
   }
 }

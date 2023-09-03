@@ -13,6 +13,8 @@ class FolderController extends GetxController {
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
   SignUpController signUpController = Get.put(SignUpController());
 
+
+
   final CollectionReference _folder =
       FirebaseFirestore.instance.collection('folder');
 
@@ -56,7 +58,7 @@ class FolderController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
-             homeScreenController.FolderTextEditingController.clear();
+            homeScreenController.FolderTextEditingController.clear();
             Get.back();
           },
           child: Text(
@@ -97,5 +99,11 @@ class FolderController extends GetxController {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

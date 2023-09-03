@@ -19,9 +19,9 @@ class HomeScreenController extends GetxController {
   get formKey => _formKey;
 
   TextEditingController _searchController = TextEditingController();
-  RxString search = ''.obs;
 
   get SearchController => _searchController;
+  RxString search = ''.obs;
   final TextEditingController _folderTextEditingController =
       TextEditingController();
   get FolderTextEditingController => _folderTextEditingController;

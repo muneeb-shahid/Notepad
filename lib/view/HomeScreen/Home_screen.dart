@@ -176,6 +176,7 @@ class HomePage extends StatelessWidget {
             child: Text("Show Dialog"),
           ),
         ),
+  
         body: SafeArea(
           top: true,
           child: Column(
@@ -249,6 +250,13 @@ class HomePage extends StatelessWidget {
                           final docId = streamSnapshots.data!.docs[index].id;
                           String position = documentSnapshot['title'];
 
+                          bool doesNotContain = !position
+                              .toLowerCase()
+                              .contains(homeScreenController
+                                  .SearchController.text
+                                  .toString()
+                                  .toLowerCase());
+
                           if (homeScreenController
                               .SearchController.text.isEmpty) {
                             return ClipRRect(
@@ -289,7 +297,6 @@ class HomePage extends StatelessWidget {
                                                 .app_black_color,
                                           ),
                                         ),
-                                       
                                         trailing: SizedBox(
                                             width: 100,
                                             child: Row(children: [
@@ -315,7 +322,6 @@ class HomePage extends StatelessWidget {
                                                         documentSnapshot.id);
                                                   }),
                                             ]))),
-                                  
                                   ),
                                 ),
                               ),
@@ -391,6 +397,16 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             );
+                          } else if (doesNotContain) {
+                            return Center(
+                              child: Text(
+                                "Not found",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: Fonts_Size_Constants
+                                        .heading_font_size.sp),
+                              ),
+                            );
                           } else {
                             return Container();
                           }
@@ -403,7 +419,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ));
+  
   }
-
-
 }
