@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NoteController extends GetxController {
+class Folder_InsertNoteController extends GetxController {
   TextEditingController _titleController = TextEditingController();
   get TitleController => _titleController;
 
@@ -16,13 +16,12 @@ class NoteController extends GetxController {
   FocusNode _focusNode1 = FocusNode();
   get focusNode1 => _focusNode1;
 
-  
   FocusNode _focusNode2 = FocusNode();
   get focusNode2 => _focusNode2;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   get formKey => _formKey;
-  CollectionReference _notes = FirebaseFirestore.instance.collection('notes');
+  CollectionReference _folder = FirebaseFirestore.instance.collection('folder');
 
   @override
   void dispose() {
@@ -42,8 +41,6 @@ class NoteController extends GetxController {
     return null;
   }
 
-
-
   String UserId = FirebaseAuth.instance.currentUser!.uid;
   insertData() async {
     if (_formKey.currentState!.validate()) {
@@ -53,7 +50,7 @@ class NoteController extends GetxController {
       final String content = _contentController.text;
 
       if (content != null) {
-        await _notes
+        await _folder
             .add({"title": title, "content": content, "UserId": UserId});
 
         _titleController.text = '';

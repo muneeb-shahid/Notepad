@@ -12,6 +12,7 @@ import '../../controller/FolderController/FolderController.dart';
 import '../../controller/HomeScreenController/HomeScreenController.dart';
 import '../../controller/SearchDelegate/searchDelegate.dart';
 import '../Checklist/Checklist.dart';
+import '../Folder_InsertNotes.dart/folder_insertNote.dart';
 import '../FullPageNote/FullPageNote.dart';
 import '../HomeScreen/Home_screen.dart';
 import '../Note/Note.dart';
@@ -135,7 +136,7 @@ class Folder_Sub_Notes extends StatelessWidget {
               onSelected: (value) {
                 switch (value) {
                   case _menuValues.Note:
-                    Get.to(Note());
+                    Get.to(Folder_InsertNote());
                     break;
                   case _menuValues.Checklist:
                     Get.to(Checklist());
