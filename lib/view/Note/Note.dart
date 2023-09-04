@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/constants/colors_constants/colors_constants.dart';
 import 'package:notepad/constants/fonts_size_constant/fonts_size_constant.dart';
+import 'package:notepad/controller/HomeScreenController/HomeScreenController.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../controller/NoteController/NoteController.dart';
@@ -14,81 +15,96 @@ class Note extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // noteController.controller;
-
-    // final _toolbarColor = Colors.grey.shade200;
-    // final _backgroundColor = Colors.white70;
-    // final _toolbarIconColor = Colors.black87;
-    // final _editorTextStyle = const TextStyle(
-    //     fontSize: 18,
-    //     color: Colors.black,
-    //     fontWeight: FontWeight.normal,
-    //     fontFamily: 'Roboto');
-    // final _hintTextStyle = const TextStyle(
-    //     fontSize: 18, color: Colors.black12, fontWeight: FontWeight.normal);
     NoteController noteController = Get.put(NoteController());
+    HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
     return Scaffold(
         backgroundColor: Colors_Constants.app_background_color,
         appBar: AppBar(
           backgroundColor: Colors_Constants.app_pink_color,
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors_Constants.app_pink_color,
-          onPressed: () async {
-            noteController.insertData();
-      
-          },
-          child: Icon(Icons.save),
+          title: Text(
+            "Notes",
+            style: TextStyle(
+                fontFamily: Fonts_Size_Constants.Philosopher,
+                fontWeight: FontWeight.bold,
+                fontSize: Fonts_Size_Constants.heading_font_size.sp),
+          ),
+          actions: [
+            IconButton(
+                icon: const Icon(
+                  Icons.logout_outlined,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  homeScreenController.signOut();
+                }),
+            IconButton(
+                icon: const Icon(
+                  Icons.check,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  noteController.insertData();
+                }),
+          ],
         ),
         body: SafeArea(
             top: true,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Form(
-                      key: noteController.formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            style: TextStyle(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Column(
+                  children: [
+                    Form(
+                        key: noteController.formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              style: TextStyle(
+                                  letterSpacing: 2,
+                                  wordSpacing: 2,
+                                  fontFamily:
+                                      Fonts_Size_Constants.heading_font_family,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors_Constants.app_black_color,
+                                  fontSize: Fonts_Size_Constants
+                                      .heading_font_size.sp),
+                              controller: noteController.TitleController,
+                              decoration: const InputDecoration(
+                                hintText: 'Title',
+                              ),
+                              validator: noteController.validateTitle,
+                              focusNode: noteController.focusNode1,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(noteController.focusNode2);
+                              },
+                            ),
+                            TextFormField(
+                              maxLines: 100,
+                              controller: noteController.ContentController,
+                              decoration: const InputDecoration(
+                                hintText: 'Note something down',
+                              ),
+                              style: TextStyle(
+                                letterSpacing: 2,
+                                wordSpacing: 2,
                                 fontFamily:
-                                    Fonts_Size_Constants.heading_font_family,
-                                fontWeight: FontWeight.bold,
+                                    Fonts_Size_Constants.regular_font_family,
+                                fontSize: Fonts_Size_Constants
+                                    .sub_heading_font_size.sp,
                                 color: Colors_Constants.app_black_color,
-                                fontSize:
-                                    Fonts_Size_Constants.heading_font_size.sp),
-                            controller: noteController.TitleController,
-                            decoration: const InputDecoration(
-                              hintText: 'Title',
+                              ),
+                              focusNode: noteController.focusNode2,
                             ),
-                            validator: noteController.validateTitle,
-                            focusNode: noteController.focusNode1,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context)
-                                  .requestFocus(noteController.focusNode2);
-                            },
-                          ),
-                          TextFormField(
-                            maxLines: 50,
-                            controller: noteController.ContentController,
-                            decoration: const InputDecoration(
-                              hintText: 'Content',
-                            ),
-                            style: TextStyle(
-                              fontFamily:
-                                  Fonts_Size_Constants.regular_font_family,
-                              color: Colors_Constants.app_black_color,
-                            ),
-                            focusNode: noteController.focusNode2,
-                          ),
-                        ],
-                      )),
-                ],
+                          ],
+                        )),
+                  ],
+                ),
               ),
             )));
   }
-
 }
 
 

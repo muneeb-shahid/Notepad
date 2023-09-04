@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:notepad/controller/MyAppController/MyAppController.dart';
+import 'package:notepad/view/BottomNav/BottomNav.dart';
 import 'package:notepad/view/HomeScreen/Home_screen.dart';
 import 'package:notepad/view/Note/Note.dart';
 import 'package:notepad/view/Start_Screen/Start_Screen.dart';
@@ -35,12 +36,12 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Notepad',
           theme: ThemeData(
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           getPages: AppRoutes.appRoutes(),
-          home: appController.user != null ? HomePage() :  Start_Screen(),
+          home: appController.user != null ? BottomNav() :  Start_Screen(),
         );
       },
     );

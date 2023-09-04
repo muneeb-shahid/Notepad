@@ -29,6 +29,7 @@ class EditPost extends StatelessWidget {
           },
           child: Icon(Icons.save),
         ),
+
         body: SafeArea(
             top: true,
             child: SingleChildScrollView(

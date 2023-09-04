@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../controller/EmailVerificationController/EmailVerificationController.dart';
 import '../../images/images.dart';
+import '../BottomNav/BottomNav.dart';
 import '../HomeScreen/Home_screen.dart';
 
 class EmailVerification extends StatelessWidget {
@@ -23,7 +24,7 @@ class EmailVerification extends StatelessWidget {
   @override
   Widget build(BuildContext context) => emailVerificationController
           .isEmailVerified
-      ? HomePage()
+      ? BottomNav()
       : Scaffold(
           backgroundColor: Colors_Constants.app_background_color,
           body: SafeArea(
